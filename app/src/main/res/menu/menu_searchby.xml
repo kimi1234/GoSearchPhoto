@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_search_name"
+        android:title="Name" />
+    <item
+        android:id="@+id/menu_search_size"
+        android:title="Size" />
+    <item
+        android:id="@+id/menu_search_ext"
+        android:title="Extension" />
+    <item
+        android:id="@+id/menu_search_uploaddate"
+        android:title="Last Upload Date" />
+    <item
+        android:id="@+id/menu_search_album"
+        android:title="Album" />
+    <item
+        android:id="@+id/menu_search_desc"
+        android:title="Description" />
+</menu>

@@ -5,6 +5,7 @@ package com.fyp.gosearchphoto.model;
  */
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fyp.gosearchphoto.R;
+import com.fyp.gosearchphoto.utils.Utilities;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +33,8 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
 
     private List<DataItem> mItems;
     private Context mContext;
+
+
 
     public DataItemAdapter(Context context, List<DataItem> items) {
         this.mContext = context;
@@ -66,7 +72,7 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
     * Supplies the data that you want to display to the user and set up event handlers
     * */
     @Override
-    public void onBindViewHolder(DataItemAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final DataItemAdapter.ViewHolder holder, int position) {
         final DataItem item = mItems.get(position);
 
         try {
@@ -94,6 +100,7 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
                 intent.putExtra(ITEM_KEY, item);
 
                 mContext.startActivity(intent);*/
+
             }
 
         });
@@ -120,20 +127,119 @@ public class DataItemAdapter extends RecyclerView.Adapter<DataItemAdapter.ViewHo
     * my image views and other visual widgets.
     * And then I'm saving those as public fields of the ViewHolder class.
     * */
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView tvName;
+        public TextView tvName, tvUploadDate, tvUploadBy;
         public ImageView imageView;
         public View mView;
+        public ImageButton iBDownload, iBInfo;
+        public ImageButton iBFave;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
 
+            iBFave = (ImageButton) itemView.findViewById(R.id.imageButtonFave);
+            iBDownload = (ImageButton) itemView.findViewById(R.id.imageButtonDownload);
+            iBInfo = (ImageButton) itemView.findViewById(R.id.imageButtonInfo);
+
             tvName = (TextView) itemView.findViewById(R.id.itemNameText);
+            tvUploadDate = (TextView) itemView.findViewById(R.id.tvUploadDate);
+            tvUploadBy = (TextView) itemView.findViewById(R.id.tvUploadBy);
+
             imageView = (ImageView) itemView.findViewById(R.id.imageView);
+            itemView.setOnClickListener(this);
+
+
+            iBFave.setOnClickListener(this);
+            iBInfo.setOnClickListener(this);
+            iBDownload.setOnClickListener(this);
 
             // That view will reference will be available to the rest of the adapter
             mView = itemView;
         }
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.imageButtonFave:
+              //  iBFave.setButtonDrawable(R.drawable.rate_star_pink);
+                //iBFave.setBackgroundResource(R.drawable.rate_star_pink);
+                   // iBFave.setImageResource(R.drawable.rate_star_pink);
+
+
+                   Log.i("Favourite clicked", iBFave.getDrawable().toString());
+                    //startActivity(new Intent(MainActivity.this, LogInActivity.class));
+
+                    Object tag = iBFave.getTag();
+                    int backgroundId = R.drawable.rate_star_pink;
+                    if( tag != null && ((Integer)tag).intValue() == backgroundId) {
+                        backgroundId = R.drawable.rate_star_darkgrey;
+                    }
+                    iBFave.setTag(backgroundId);
+                    iBFave.setImageResource(backgroundId);
+
+                    Utilities.displayToast(view.getContext(),"Favourites Selected");
+
+
+                    break;
+
+                case R.id.imageButtonDownload:
+                    //startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                    ;
+                    Utilities.displayToast(view.getContext(),"Download Selected");
+
+                    break;
+                case R.id.imageButtonInfo:
+                    showImageInfo(view.getContext());
+                    // startActivity(new Intent(MainActivity.this, TabActivity.class));
+
+                    break;
+            }
+            Log.i("click", "button is clicked");
+
+        }
+
+        public void showImageInfo(Context context){
+            final Dialog dialog = new Dialog(context);
+            dialog.setContentView(R.layout.popup_info);
+            dialog.setTitle("Image Information");
+
+            // set the custom dialog components - text, image and button
+
+            Button dialogButtonCancel = (Button) dialog.findViewById(R.id.dialogbtn_cancel);
+           final Button dialogButtonEdit = (Button) dialog.findViewById(R.id.dialogbtn_edit);
+            // if button is clicked, close the custom dialog
+            dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialogButtonEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(dialogButtonEdit.getText().equals("Edit")){
+                        dialogButtonEdit.setText("Save");
+                    }else {
+                        dialog.dismiss();
+
+                    }
+
+                }
+            });
+
+            dialogButtonEdit.setText("Edit");
+
+            dialog.show();
+            //  Set dialog width to fill parent and height to wrap content
+            dialog.getWindow()
+                    .setAttributes(Utilities.setPopUpWidth(dialog));
+
+
+        }
+
+
     }
+
 }

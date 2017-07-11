@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context="com.fyp.gosearchphoto.activity.ManageGroupActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:orientation="vertical"
+    android:weightSum="3">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_weight=".5"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="115dp"
+            android:gravity="center_horizontal"
+            android:text="@string/title_activity_manage_group"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            app:srcCompat="@drawable/candyloopicon" />
+
+        <ImageView
+            android:id="@+id/btnMGroupClose"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="right"
+            app:srcCompat="@drawable/close" />
+
+        <TextView
+            android:id="@+id/tvMGroupValidation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="155dp"
+            android:fontFamily="sans-serif"
+            android:gravity="left"
+            android:textColor="@color/red"
+            android:textSize="12sp"
+            android:visibility="invisible" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.45"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/etMGroupSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginRight="55dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="sans-serif"
+            android:hint=" Search Group Name"
+            android:foregroundTint="@color/textColor"
+            android:backgroundTint="@color/textColor"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:layout_weight=".85"
+            />
+
+
+        <ImageButton
+            android:id="@+id/ibMGroupFilter"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:gravity="top|right"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/list"
+            android:layout_weight=".25" />
+
+    </RelativeLayout>
+
+</LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabManageGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:backgroundTint="@color/button_purple"
+        app:srcCompat="@drawable/buttonadd" />
+</RelativeLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:background="#FFFFFF"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:id="@+id/layoutFirstLayerAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lblFirstLayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Create new album"
+                android:textColor="#585858"
+                android:textSize="@dimen/infoTextSizeTitle"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btnInfoLockAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="left"
+                app:srcCompat="@drawable/unlocked" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_albumName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutFirstLayerAlbum"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:fontFamily="sans-serif"
+            android:background="@drawable/textborder"
+            android:imeOptions="actionDone"
+            android:text="Name" />
+
+        <LinearLayout
+            android:id="@+id/layoutSecondLayerAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_albumName"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lblSecondLayer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight=".6"
+                android:text="Size"
+                android:textColor="#585858"
+                android:textSize="@dimen/infoTextSizeTitle"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight=".4"
+                android:text="1024 x 1024"
+                android:textColor="#585858"
+                android:textSize="@dimen/infoTextSizeDesc" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/dialogbtn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:height="50dp"
+            android:layout_margin="10dp"
+            android:text="Edit"
+            android:background="@color/button_lightblue"
+            android:layout_weight=".50" >
+        </Button>
+
+        <Button
+            android:id="@+id/dialogbtn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:height="50dp"
+            android:layout_gravity="center"
+            android:text="Cancel"
+            android:background="@color/button_white"
+            android:layout_weight=".50" >
+        </Button>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
+import com.fyp.gosearchphoto.database.CDataSource;
 import com.fyp.gosearchphoto.utils.APIManager;
 import com.fyp.gosearchphoto.utils.Utilities;
 
@@ -83,8 +84,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                                 Utilities.displayToast(this, "Registration Successful");
                                 Utilities.displayToast(this, apiRegister);
-
-                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                registerNow( getUsername,  getEmail, getPassword);
                                 tvRegisterValidation.setVisibility(View.GONE);
                             }else{
 
@@ -117,7 +117,20 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         tvRegisterValidation.setVisibility(View.GONE);
 
     }
+    public void registerNow(String userName, String email, String password){
+        final CDataSource databaseAccess = CDataSource.getInstance(this);
+        if(databaseAccess.checkUsernameExists(userName)){
+            Utilities.displayToast(this, "user already exists. Please try again");
 
+        }else{
+            databaseAccess.insertUser(userName, email, password);
+
+            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+
+            Utilities.displayToast(this, "user registration success");
+
+        }
+    }
 
 
 }

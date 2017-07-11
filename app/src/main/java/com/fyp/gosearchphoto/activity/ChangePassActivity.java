@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
+import com.fyp.gosearchphoto.database.CDataSource;
 import com.fyp.gosearchphoto.utils.APIManager;
+import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
 
 public class ChangePassActivity extends AppCompatActivity implements View.OnClickListener{
@@ -73,10 +75,8 @@ public class ChangePassActivity extends AppCompatActivity implements View.OnClic
                     if(getNewPassword.equals(getNewConfirmPassword)) {
                         apiChangePassword = APIManager.getChangePasswordAPI(getUserID, getNewPassword);
 
-                        Utilities.displayToast(this, "Change Successful");
                         Utilities.displayToast(this, apiChangePassword);
-
-                        startActivity(new Intent(ChangePassActivity.this, LogInActivity.class));
+                        checkPassword();
                         tvChangePassValidation.setVisibility(View.GONE);
                     }else{
 
@@ -100,5 +100,24 @@ public class ChangePassActivity extends AppCompatActivity implements View.OnClic
         etcp_confirmNewPassword.setText("");
         tvChangePassValidation.setVisibility(View.GONE);
 
+    }
+
+    public void checkPassword(){
+        String getPreferencePass = PreferencesConfig.getPasswordPreference(this).toString().trim();
+        int getUserId = PreferencesConfig.getUserIDPreference(this);
+
+
+        if(getPreferencePass.equals(getOldPassword)) {
+            startActivity(new Intent(ChangePassActivity.this, LogInActivity.class));
+
+            CDataSource.getInstance(this)
+                    .updatePassword(getNewPassword
+                            , getUserId );
+            Utilities.displayToast(this, "Change Successful");
+        }else{
+            Utilities.displayToast(this, "Wrong password, Please try again");
+            initializeChangePasswordPage();
+
+        }
     }
 }

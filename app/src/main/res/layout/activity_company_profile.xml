@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fyp.gosearchphoto.activity.ProfileActivity"
+    tools:context="com.fyp.gosearchphoto.activity.CompanyProfileActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="115dp"
             android:gravity="center_horizontal"
-            android:text="Update Profile"
+            android:text="@string/title_activity_company_profile"
             android:textSize="24sp" />
 
         <ImageView
@@ -34,7 +34,7 @@
             app:srcCompat="@drawable/candyloopicon" />
 
         <ImageView
-            android:id="@+id/btnProfileClose"
+            android:id="@+id/btnCompanyProfileClose"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginBottom="10dp"
@@ -46,7 +46,7 @@
             app:srcCompat="@drawable/close" />
 
         <TextView
-            android:id="@+id/tvProfileValidation"
+            android:id="@+id/tvCompanyProfileValidation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="155dp"
@@ -55,18 +55,20 @@
             android:layout_marginLeft="40dp"
             android:textSize="12sp"
             android:fontFamily="sans-serif"
-            android:visibility="gone"/>
+            android:visibility="invisible"/>
+
+
     </RelativeLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.4"
+        android:layout_weight="0.45"
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/etProfileUsername"
+            android:id="@+id/etCProfileName"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
@@ -74,91 +76,69 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:fontFamily="sans-serif"
-            android:hint=" Username"
+            android:hint=" Company Name"
             android:imeOptions="actionDone"
             android:inputType="text" />
 
-        <EditText
-            android:id="@+id/etProfileEmail"
+        <Spinner
+            android:id="@+id/spinnerIndustry"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/etCProfileName"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="55dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp"
+            />
+
+
+        <EditText
+            android:id="@+id/etCProfileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_below="@+id/spinnerIndustry"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
-            android:hint=" Email"
+            android:hint="Email"
             android:imeOptions="actionDone"
             android:inputType="textEmailAddress" />
-
-
         <EditText
-            android:id="@+id/etProfilePassword"
+            android:id="@+id/etCProfileDesc"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_height="80dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="115dp"
+            android:layout_below="@+id/etCProfileEmail"
+            android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
-            android:hint="Password"
+            android:hint="Description"
             android:imeOptions="actionDone"
-            android:inputType="textPassword" />
-
+            android:inputType="textImeMultiLine" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".8"
+        android:layout_weight="0.67"
         android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnProfileSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="0dp"
-            android:height="40dp"
-            android:background="@color/button_lightblue"
-            android:padding="10dp"
-            android:text="Save"></Button>
 
 
         <Button
             android:id="@+id/btnProfileChangePass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:height="40dp"
-            android:background="@color/button_white"
+            android:background="@color/button_lightblue"
             android:padding="10dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="20dp"
 
-            android:text="Change Password"></Button>
+            android:text="Update"></Button>
 
-        <Button
-            android:id="@+id/btnProfileDeleteAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:height="40dp"
-            android:background="@color/button_red"
-            android:padding="10dp"
-            android:layout_marginTop="140dp"
-            android:text="Deactivate Account"></Button>
 
 
     </RelativeLayout>

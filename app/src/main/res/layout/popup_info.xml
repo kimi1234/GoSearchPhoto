@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/svInfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/btnInfoClose"
+        android:layout_weight=".7">
+
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp"
+            android:background="#FFFFFF"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:id="@+id/layoutFirstLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblFirstLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Title"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text="The Great Escape"
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSecondLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutFirstLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblSecondLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Size"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSize"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text="1024 x 1024"
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutThirdLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutSecondLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblThirdLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Description"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight=".4"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutFourthLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutThirdLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblFourthLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Album"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvAlbum"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text="Album One "
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutFifthLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutFourthLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblFifthLayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="0.12"
+                    android:text="Who can view"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:id="@+id/btnInfoLock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="left"
+                    app:srcCompat="@drawable/locked" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSixthLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutFifthLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblSixthLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Extension"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvExtension"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text=".png "
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSeventhLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutSixthLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblSeventhLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Uploaded by"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvUploadedBy"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text="kim_123 "
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutEighthLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutSeventhLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblEighthLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Uploaded Date"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvUploadedDate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text="March 12, 2017 "
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:textColor="#585858" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layoutInfoButtonLayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/svInfo"
+        android:layout_marginTop="5dp"
+        android:layout_weight=".1"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/dialogbtn_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:height="50dp"
+            android:layout_margin="10dp"
+            android:text="Edit"
+            android:background="@color/button_lightblue"
+            android:layout_weight=".50" >
+        </Button>
+
+        <Button
+            android:id="@+id/dialogbtn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:height="50dp"
+            android:layout_gravity="center"
+            android:text="Cancel"
+            android:background="@color/button_white"
+            android:layout_weight=".50" >
+        </Button>
+
+
+    </LinearLayout>
+</LinearLayout>

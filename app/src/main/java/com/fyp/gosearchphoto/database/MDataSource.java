@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.fyp.gosearchphoto.model.DataItem;
 
@@ -52,7 +53,7 @@ public class MDataSource {
     public long getDataItemsCount() {
         return DatabaseUtils.queryNumEntries(mDatabase, ItemsTable.TABLE_ITEMS);
     }
-
+    // populate db
     public void seedDatabase(List<DataItem> dataItemList) {
         long numItems = getDataItemsCount();
         if (numItems == 0) {
@@ -107,6 +108,73 @@ public class MDataSource {
                     cursor.getColumnIndex(ItemsTable.COLUMN_IMAGE)));
             dataItems.add(item);
         }
+        return dataItems;
+    }
+
+
+    public List<DataItem> getImagesByKeyword(String keyword) {
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        open();
+        String[] projection = {
+                ItemsTable.COLUMN_ID,
+                ItemsTable.COLUMN_NAME,
+                ItemsTable.COLUMN_DESCRIPTION,
+                ItemsTable.COLUMN_CATEGORY,
+                ItemsTable.COLUMN_ID,
+                ItemsTable.COLUMN_PRICE,
+                ItemsTable.COLUMN_IMAGE
+        };
+        // Filter results WHERE "title" = 'username'
+        String selection = ItemsTable.COLUMN_NAME + " LIKE ?";
+        String[] selectionArgs = {"%"+keyword+"%"};
+
+        // How you want the results sorted in the resulting Cursor
+        String sortOrder =
+                ItemsTable.COLUMN_NAME + " ASC";
+
+        Cursor cursor = null;
+        /**
+         *  If you want to sort by more than one column,
+         *  pass in a comma delimited list of column names.
+         *  Or if you want to sort in descending order,
+         *  just pass in the appropriate SQL keyword desc.
+         *  Whatever string you pass in just becomes a part of the SQL statement
+         */
+        cursor = mDatabase.query(
+                ItemsTable.TABLE_ITEMS,                     // The table to query
+                projection,                               // The columns to return
+                selection,                                // The columns for the WHERE clause
+                selectionArgs,                            // The values for the WHERE clause
+                null,                                     // don't group the rows
+                null,                                     // don't filter by row groups
+                sortOrder                                 // The sort order
+        );
+
+        List<DataItem> dataItems = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            DataItem item = new DataItem();
+            item.setItemId(cursor.getString(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_ID)));
+            item.setItemName(cursor.getString(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_NAME)));
+            item.setDescription(cursor.getString(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_DESCRIPTION)));
+            item.setCategory(cursor.getString(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_CATEGORY)));
+            item.setSortPosition(cursor.getInt(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_ID)));
+            item.setPrice(cursor.getDouble(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_PRICE)));
+            item.setImage(cursor.getString(
+                    cursor.getColumnIndex(ItemsTable.COLUMN_IMAGE)));
+            dataItems.add(item);
+        }
+
+        cursor.close();
+        Log.i("CDataSource", "Username retrieve success");
+        close();
         return dataItems;
     }
 }

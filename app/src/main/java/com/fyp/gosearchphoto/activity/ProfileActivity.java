@@ -10,8 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
+import com.fyp.gosearchphoto.database.CDataSource;
+import com.fyp.gosearchphoto.model.DataUser;
 import com.fyp.gosearchphoto.utils.APIManager;
+import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
+
+import java.util.List;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -21,12 +26,17 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView btnProfileClose;
     private TextView tvProfileValidation;
 
-
+    List<DataUser> listFromDB;
     private EditText etProfileEmail;
     private EditText etProfileUsername;
     private EditText etProfilePassword;
 
     String apiUpdateProfile;
+    String getUsername ;
+    String getPassword ;
+    String getEmail ;
+    int getUserId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +61,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnProfileSave:
-                String getUsername = etProfileUsername.getText().toString().trim();
-                String getPassword = etProfilePassword.getText().toString().trim();
-                String getEmail = etProfileEmail.getText().toString().trim();
+                 getUsername = etProfileUsername.getText().toString().trim();
+                 getPassword = etProfilePassword.getText().toString().trim();
+                 getEmail = etProfileEmail.getText().toString().trim();
                 int userID = 1;   //later get user id in db
 
                 if(Utilities.checkIsNull(getUsername)==true ||Utilities.checkIsNull(getEmail)==true ){
@@ -67,20 +77,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         if (Utilities.isValidEmail(getEmail) == true) {
                                 apiUpdateProfile = APIManager.getUpdateProfileAPI(getUsername, getEmail, userID);
 
-                                Utilities.displayToast(this, "Update Profile Successful");
                                 Utilities.displayToast(this, apiUpdateProfile);
-
-                            startActivity(new Intent(ProfileActivity.this, TabActivity.class));
+                                checkPassword();
 
                         } else {
-
                             tvProfileValidation.setText("Invalid Email. Please try again");
                             tvProfileValidation.setVisibility(View.VISIBLE);
-
                         }
-
                     }
-
                 }
 
                 break;
@@ -96,9 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.btnProfileChangePass:
                 startActivity(new Intent(ProfileActivity.this, ChangePassActivity.class));
 
-
                 break;
-
         }
     }
 
@@ -107,6 +109,35 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         etProfilePassword.setText("");
         etProfileUsername.setText("");
         tvProfileValidation.setVisibility(View.GONE);
+        getUserInfoNow();
+    }
 
+    public void getUserInfoNow(){
+        getUserId = PreferencesConfig.getUserIDPreference(this);
+         listFromDB =  CDataSource.getInstance(this)
+                .getUserInfoByID(getUserId);
+
+         etProfileEmail.setText(listFromDB.get(0).getEmail());
+         etProfileUsername.setText(listFromDB.get(0).getUserName());
+    }
+
+    public void checkPassword(){
+        String getPreferencePass = PreferencesConfig.getPasswordPreference(this).toString().trim();
+        String getPassEditor =  etProfilePassword.getText().toString().trim();
+
+
+        if(getPreferencePass.equals(getPassEditor)) {
+            startActivity(new Intent(ProfileActivity.this, TabActivity.class));
+
+            CDataSource.getInstance(this)
+                    .updateUserInfo(getUsername,
+                            getEmail, getUserId );
+            Utilities.displayToast(this, "Profile Update Successful");
+        }else{
+            Utilities.displayToast(this, "Wrong password, Please try again");
+            Utilities.displayToast(this, PreferencesConfig.getPasswordPreference(this)+"is not equal to"+etProfilePassword.getText().toString());
+            etProfilePassword.setText("");
+
+        }
     }
 }
