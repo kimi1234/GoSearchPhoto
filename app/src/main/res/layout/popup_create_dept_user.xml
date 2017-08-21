@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:id="@+id/layoutFirstLayerAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/lblFirstLayer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="Add Department Users"
+                android:textColor="#585858"
+                android:textSize="@dimen/infoTextSizeTitle"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etDUserSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/layoutFirstLayerAlbum"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight=".85"
+            android:backgroundTint="@color/textColor"
+            android:fontFamily="sans-serif"
+            android:foregroundTint="@color/textColor"
+            android:hint=" Search company users"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
+
+
+        <LinearLayout
+            android:id="@+id/layoutSecondLayerAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etDUserSearch"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvExistingUsers"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                app:layoutManager="LinearLayoutManager" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/layoutSecondLayerAlbum"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#585858" />
+        <LinearLayout
+            android:id="@+id/layoutThirdLayerAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutSecondLayerAlbum"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <EditText
+                android:id="@+id/etDepartmentName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight=".6"
+                android:text="Group Name"
+                android:textColor="#585858"
+                android:textSize="@dimen/infoTextSizeTitle"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tvSubTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight=".4"
+                android:text="Users to be added to department.."
+                android:textColor="#585858"
+                android:textSize="@dimen/infoTextSizeSubtitle" />
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvToAddDUsers"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                app:layoutManager="LinearLayoutManager" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/dialog_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="100dp"
+            android:layout_weight=".50"
+            android:height="50dp"
+            android:background="@color/color_white"
+            android:padding="10dp"
+            android:text="Cancel"
+
+            android:textColor="@color/blueLink"></Button>
+
+        <Button
+            android:id="@+id/dialog_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:layout_weight=".50"
+            android:height="50dp"
+            android:background="@color/color_white"
+            android:padding="10dp"
+            android:text="OK"
+            android:textColor="@color/blueLink"></Button>
+    </RelativeLayout>
+
+</LinearLayout>

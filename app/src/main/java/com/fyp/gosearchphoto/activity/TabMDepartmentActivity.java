@@ -89,7 +89,7 @@ public class TabMDepartmentActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.menu_close_manager) {
-            startActivity(new Intent(TabMDepartmentActivity.this, TabActivity.class));
+            startActivity(new Intent(TabMDepartmentActivity.this, ManageDepartmentActivity.class));
         }
         return super.onOptionsItemSelected(item);
 

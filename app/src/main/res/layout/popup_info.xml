@@ -295,6 +295,39 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutNinthLayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutEighthLayer"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/lblNinthLayer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".6"
+                    android:text="Tags"
+                    android:textColor="#585858"
+                    android:textSize="@dimen/infoTextSizeTitle"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTags"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight=".4"
+                    android:text="great, mountain, escape "
+                    android:textSize="@dimen/infoTextSizeDesc"
+                    android:textColor="#585858" />
+
+            </LinearLayout>
         </RelativeLayout>
 
     </ScrollView>

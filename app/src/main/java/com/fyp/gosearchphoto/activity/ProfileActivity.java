@@ -1,5 +1,6 @@
 package com.fyp.gosearchphoto.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,13 +37,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     String getPassword ;
     String getEmail ;
     int getUserId;
-
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        mContext = this;
         btnChangePassword = (Button)findViewById(R.id.btnProfileChangePass);
         btnProfileDeleteAccount = (Button)findViewById(R.id.btnProfileDeleteAccount);
         btnChangePassSave = (Button)findViewById(R.id.btnProfileSave);
@@ -113,15 +114,16 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     public void getUserInfoNow(){
-        getUserId = PreferencesConfig.getUserIDPreference(this);
-         listFromDB =  CDataSource.getInstance(this)
-                .getUserInfoByID(getUserId);
+        getUserId = PreferencesConfig.getUserIDPreference(mContext);
+        String fullname = PreferencesConfig.getFullnamePreference(mContext);
+        String email = PreferencesConfig.getEmailPreference(mContext);
+            etProfileEmail.setText(email);
+            etProfileUsername.setText(fullname);
 
-         etProfileEmail.setText(listFromDB.get(0).getEmail());
-         etProfileUsername.setText(listFromDB.get(0).getUserName());
     }
 
     public void checkPassword(){
+        //TODO: CAll API HERE
         String getPreferencePass = PreferencesConfig.getPasswordPreference(this).toString().trim();
         String getPassEditor =  etProfilePassword.getText().toString().trim();
 

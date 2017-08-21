@@ -74,7 +74,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:fontFamily="sans-serif"
-            android:hint=" Username"
+            android:hint=" Full Name"
             android:imeOptions="actionDone"
             android:inputType="text" />
 

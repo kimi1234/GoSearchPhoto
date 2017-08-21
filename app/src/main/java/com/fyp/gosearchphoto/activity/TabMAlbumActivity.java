@@ -47,6 +47,7 @@ public class TabMAlbumActivity extends  AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new AlbumProfileFragment(), "Profile");
         adapter.addFragment(new AlbumUserFragment(), "Who can view");
+
         viewPager.setAdapter(adapter);
     }
 

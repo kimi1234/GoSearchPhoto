@@ -2,11 +2,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.fyp.gosearchphoto.fragment.AlbumProfileFragment">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Album Profile" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/albumProfileTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:text="Project Album Information"
+            android:textColor="@color/text_really_black"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/etAlbumProfileName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:fontFamily="sans-serif"
+            android:hint=" Album Name"
+            android:foregroundTint="@color/textColor"
+            android:backgroundTint="@color/textColor"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/albumProfileTitle"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            />
 
+        <Spinner
+            android:id="@+id/spinnerAlbumProfileType"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/etAlbumProfileName"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="5dp" />
+
+        <EditText
+            android:id="@+id/etAlbumProfileDesc"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/spinnerAlbumProfileType"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="Description"
+            android:imeOptions="actionDone"
+            android:inputType="textImeMultiLine" />
+        <Button
+            android:id="@+id/btnAlbumProfileSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="80dp"
+            android:layout_below="@+id/etAlbumProfileDesc"
+
+            android:layout_marginRight="40dp"
+            android:height="40dp"
+            android:background="@color/button_lightblue"
+            android:padding="10dp"
+            android:text="Update"></Button>
+        <Button
+            android:id="@+id/btnAlbumProfileDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/btnAlbumProfileSave"
+
+            android:layout_marginRight="40dp"
+            android:height="40dp"
+            android:background="@color/button_red"
+            android:padding="10dp"
+            android:text="Delete"></Button>
+</RelativeLayout>
 </FrameLayout>

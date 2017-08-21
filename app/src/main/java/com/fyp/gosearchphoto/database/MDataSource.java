@@ -108,6 +108,7 @@ public class MDataSource {
                     cursor.getColumnIndex(ItemsTable.COLUMN_IMAGE)));
             dataItems.add(item);
         }
+        close();
         return dataItems;
     }
 

@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="115dp"
                 android:gravity="center_horizontal"
-                android:text="Register"
+                android:text="Register Admin Account"
                 android:textSize="24sp" />
             <TextView
                 android:id="@+id/tvRegisterValidation"
@@ -30,7 +30,7 @@
                 android:layout_marginLeft="40dp"
                 android:textSize="12sp"
                 android:fontFamily="sans-serif"
-                android:visibility="gone"/>
+                android:visibility="invisible"/>
 
             <ImageView
                 android:id="@+id/imageViewRegisterLogo"
@@ -65,7 +65,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/etRegUsername"
+                android:id="@+id/etRegFullName"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
@@ -73,7 +73,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:fontFamily="sans-serif"
-                android:hint=" Username"
+                android:hint=" Full Name"
                 android:imeOptions="actionDone"
                 android:inputType="text" />
 
@@ -89,7 +89,7 @@
                 android:fontFamily="sans-serif"
                 android:hint=" Email"
                 android:imeOptions="actionDone"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
 
 
             <EditText
@@ -100,11 +100,12 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginTop="110dp"
+                android:layout_marginTop="120dp"
                 android:fontFamily="sans-serif"
-                android:hint="Password"
+                android:hint=" Password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword" />
+
 
             <EditText
                 android:id="@+id/etRegConfirmPass"
@@ -114,11 +115,13 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:layout_marginTop="160dp"
+                android:layout_marginTop="180dp"
                 android:fontFamily="sans-serif"
-                android:hint="Confirm Password"
+                android:hint=" Confirm Password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword" />
+
+
 
 
         </RelativeLayout>
@@ -140,7 +143,7 @@
                 android:height="40dp"
                 android:background="@color/button_lightblue"
                 android:padding="10dp"
-                android:text="Register"></Button>
+                android:text="Next"></Button>
 
 
         </RelativeLayout>

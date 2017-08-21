@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fyp.gosearchphoto.activity.CompanyProfileActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="3">
+    android:weightSum="3"
+    tools:context="com.fyp.gosearchphoto.activity.CompanyProfileActivity">
 
 
     <RelativeLayout
@@ -37,11 +37,11 @@
             android:id="@+id/btnCompanyProfileClose"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
-            android:layout_alignParentRight="true"
             android:gravity="right"
             app:srcCompat="@drawable/close" />
 
@@ -49,13 +49,13 @@
             android:id="@+id/tvCompanyProfileValidation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
             android:layout_marginTop="155dp"
+            android:fontFamily="sans-serif"
             android:gravity="left"
             android:textColor="@color/red"
-            android:layout_marginLeft="40dp"
             android:textSize="12sp"
-            android:fontFamily="sans-serif"
-            android:visibility="invisible"/>
+            android:visibility="invisible" />
 
 
     </RelativeLayout>
@@ -84,33 +84,20 @@
             android:id="@+id/spinnerIndustry"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_alignParentTop="true"
             android:layout_below="@+id/etCProfileName"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="50dp"
-            />
+            android:layout_marginTop="50dp" />
 
 
-        <EditText
-            android:id="@+id/etCProfileEmail"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_below="@+id/spinnerIndustry"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif"
-            android:hint="Email"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress" />
         <EditText
             android:id="@+id/etCProfileDesc"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/spinnerIndustry"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_below="@+id/etCProfileEmail"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif"
             android:hint="Description"
@@ -127,18 +114,17 @@
 
 
         <Button
-            android:id="@+id/btnProfileChangePass"
+            android:id="@+id/btnUpdateCProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
+            android:layout_marginTop="20dp"
             android:height="40dp"
             android:background="@color/button_lightblue"
             android:padding="10dp"
-            android:layout_marginTop="20dp"
 
             android:text="Update"></Button>
-
 
 
     </RelativeLayout>

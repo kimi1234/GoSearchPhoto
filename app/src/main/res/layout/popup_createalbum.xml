@@ -51,65 +51,102 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_margin="10dp"
-            android:ems="10"
             android:inputType="textPersonName"
             android:fontFamily="sans-serif"
-            android:background="@drawable/textborder"
             android:imeOptions="actionDone"
-            android:text="Name" />
+            android:hint="Enter Album Name.."
+             />
 
+        <EditText
+            android:id="@+id/etCreateAlbumDesc"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@+id/et_albumName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="Description"
+            android:imeOptions="actionDone"
+            android:inputType="textImeMultiLine" />
+        <Button
+            android:id="@+id/dialogbtn_createbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etCreateAlbumDesc"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="right"
+            android:padding="10dp"
+            android:height="50dp"
+            android:text="Create Album"
+            android:background="@color/color_white"
+            android:textColor="@color/blueLink"
+            android:layout_weight=".50" />
+        <View
+            android:id="@+id/line_divider"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/dialogbtn_createbtn"
+            android:layout_height="0.5dp"
+            android:padding="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_margin="5dp"
+            android:layout_marginRight="10dp"
+            android:background="#585858" />
         <LinearLayout
             android:id="@+id/layoutSecondLayerAlbum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_albumName"
+            android:layout_below="@+id/line_divider"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:weightSum="1">
 
             <TextView
                 android:id="@+id/lblSecondLayer"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight=".6"
-                android:text="Size"
+                android:text="Select an album"
                 android:textColor="#585858"
                 android:textSize="@dimen/infoTextSizeTitle"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tvSize"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:layout_marginTop="10dp"
-                android:layout_weight=".4"
-                android:text="1024 x 1024"
-                android:textColor="#585858"
-                android:textSize="@dimen/infoTextSizeDesc" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvExistingAlbumPopup"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                app:layoutManager="LinearLayoutManager" />
 
         </LinearLayout>
 
 
         <Button
-            android:id="@+id/dialogbtn_edit"
+            android:id="@+id/dialogbtn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:padding="10dp"
             android:height="50dp"
-            android:layout_margin="10dp"
-            android:text="Edit"
-            android:background="@color/button_lightblue"
+            android:text="Cancel"
+            android:background="@color/color_white"
+            android:textColor="@color/blueLink"
+
             android:layout_weight=".50" >
         </Button>
 
         <Button
-            android:id="@+id/dialogbtn_cancel"
+            android:id="@+id/dialogbtn_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -118,8 +155,9 @@
             android:layout_margin="10dp"
             android:height="50dp"
             android:layout_gravity="center"
-            android:text="Cancel"
-            android:background="@color/button_white"
+            android:text="OK"
+            android:textColor="@color/blueLink"
+            android:background="@color/color_white"
             android:layout_weight=".50" >
         </Button>
 

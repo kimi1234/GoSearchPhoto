@@ -8,6 +8,9 @@
         android:title="Sort by.." />
     <item
         android:id="@+id/menu_filter"
-        android:title="Filter by.." />
+        android:title="Search by.." />
+    <item
+        android:id="@+id/menu_adv_search"
+        android:title="Advanced Search" />
 
 </menu>

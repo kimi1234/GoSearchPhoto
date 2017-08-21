@@ -84,22 +84,25 @@
                 android:backgroundTint="@color/textColor"
                 android:fontFamily="sans-serif"
                 android:foregroundTint="@color/textColor"
-                android:hint=" Search User Name"
-                android:imeOptions="actionSearch"
+                android:hint=" Search User Full Name"
+                android:imeOptions="actionDone"
                 android:inputType="text" />
 
 
             <ImageButton
-                android:id="@+id/ibMUserFilter"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:id="@+id/ibMUserSearch"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/button_true_white"
                 android:layout_weight=".25"
                 android:gravity="top|right"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/list" />
+                app:srcCompat="@drawable/icon_search" />
 
         </RelativeLayout>
+
 
     </LinearLayout>
 
@@ -107,6 +110,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvManageUsername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="55dp"
+            app:layoutManager="LinearLayoutManager" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fabManageUser"
@@ -116,7 +126,7 @@
             android:layout_alignParentRight="true"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
-            app:backgroundTint="@color/button_purple"
+            app:backgroundTint="@color/fab_background"
             app:srcCompat="@drawable/buttonadd" />
     </RelativeLayout>
 

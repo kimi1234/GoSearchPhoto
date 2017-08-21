@@ -2,12 +2,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.fyp.gosearchphoto.fragment.DeptAlbumFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Department Album" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/deptAlbumTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="40dp"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:text="Project Album"
+            android:textColor="@color/text_really_black"
+            android:textSize="20sp" />
+        <ImageButton
+            android:id="@+id/ibDepartmentAlbumAdd"
+            android:layout_marginTop="10dp"
+            android:layout_width="35dp"
+            android:layout_marginLeft="8dp"
+            android:layout_height="35dp"
+            android:gravity="top|left"
+            android:scaleType="centerCrop"
+            android:background="#FFFFFF"
+            android:layout_toRightOf="@+id/deptAlbumTitle"
+            app:srcCompat="@drawable/plus_icon" />
+        <View
+            android:id="@+id/vBottomLine"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/ibDepartmentAlbumAdd"
+            android:layout_height="1dp"
+            android:background="#585858" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvAddedDeptAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/vBottomLine"
+            android:layout_weight="1"
+            app:layoutManager="LinearLayoutManager" />
+    </RelativeLayout>
 
 </FrameLayout>

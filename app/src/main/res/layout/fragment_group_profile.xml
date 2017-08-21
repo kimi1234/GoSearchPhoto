@@ -1,0 +1,141 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fyp.gosearchphoto.fragment.GroupProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/groupAlbumTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:text="Group Information"
+                android:textColor="@color/text_really_black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/groupAlbumTitle"
+                android:layout_marginLeft="40dp"
+
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="#585858" />
+
+            <EditText
+                android:id="@+id/etGroupProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/groupAlbumTitle"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/textColor"
+                android:fontFamily="sans-serif"
+                android:foregroundTint="@color/textColor"
+                android:hint=" Group Name"
+                android:imeOptions="actionDone"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btnDeptProfileSave"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/etGroupProfileName"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:height="40dp"
+                android:background="@color/button_lightblue"
+                android:padding="10dp"
+
+                android:text="Update"></Button>
+            <Button
+                android:id="@+id/btnDeptProfileDelete"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="false"
+                android:layout_below="@+id/etGroupProfileName"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:height="40dp"
+                android:background="@color/button_red"
+                android:padding="10dp"
+
+                android:text="Delete"></Button>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/groupProfileUserTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:text="Users"
+                android:textColor="@color/text_really_black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/ibGroupProfileUserAdd"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/groupProfileUserTitle"
+                android:background="#FFFFFF"
+                android:gravity="top|left"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/plus_icon" />
+
+            <View
+                android:id="@+id/vBottomLineGroupP"
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/ibGroupProfileUserAdd"
+                android:layout_marginLeft="40dp"
+
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:background="#585858" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvGroupUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="45dp"
+                android:layout_marginRight="20dp"
+                android:layout_below="@id/vBottomLineGroupP"
+                android:layout_weight="1"
+                app:layoutManager="LinearLayoutManager" />
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

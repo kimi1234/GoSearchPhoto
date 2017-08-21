@@ -1,8 +1,13 @@
 package com.fyp.gosearchphoto.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,13 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
-import com.fyp.gosearchphoto.database.CDataSource;
 import com.fyp.gosearchphoto.model.DataUser;
+import com.fyp.gosearchphoto.services.CandyLoopService;
+import com.fyp.gosearchphoto.services.ServiceHelper;
 import com.fyp.gosearchphoto.utils.APIManager;
 import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
-
-import java.util.List;
 
 public class LogInActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -26,7 +30,8 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
     private TextView tvLogInValidation;
     private EditText etUsername;
     private EditText etPassword;
-
+    private Context mContext;
+    private String LogInTAG  ="LogInActivity";
     String apiLogIn;
 
     @Override
@@ -40,27 +45,34 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         tvLogInValidation = (TextView)findViewById(R.id.tvLogInValidation);
         etPassword = (EditText)findViewById(R.id.etPassword);
         etUsername = (EditText)findViewById(R.id.etUsername);
+        mContext = this;
         initializeLogInPage();
+        registerBroadcast();
+        //TODO : Remove this on launch
+        etPassword.setText("ana");
+        etUsername.setText("ana@gmail.com");
+
         btnLogin.setOnClickListener(this);
         btnLogInClose.setOnClickListener(this);
         tvCreateAccount.setOnClickListener(this);
+
     }
 
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogIn:
-                String getUsername = etUsername.getText().toString().trim();
+                String getEmail = etUsername.getText().toString().trim();
                 String getPassword = etPassword.getText().toString().trim();
-                if(Utilities.checkIsNull(getUsername)==true|| Utilities.checkIsNull(getPassword)== true){
+                if(Utilities.checkIsNull(getEmail)==true|| Utilities.checkIsNull(getPassword)== true){
                     tvLogInValidation.setText("Please enter all fields");
                     tvLogInValidation.setVisibility(View.VISIBLE);
+                }else if (Utilities.isValidEmail(getEmail) == true) {
+                    logInNow(getEmail, getPassword);
+
                 }else{
-
-                    apiLogIn = APIManager.getLogInAPI(getUsername, getPassword);
-
-                    Utilities.displayToast(this, apiLogIn);
-                    logInNow(getUsername, getPassword);
+                    tvLogInValidation.setText("Invalid Email. Please try again");
+                    tvLogInValidation.setVisibility(View.VISIBLE);
                 }
 
                 break;
@@ -75,6 +87,13 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                 break;
         }
     }
+    public void registerBroadcast(){
+        CandyLoopService.setMyServicePage(ServiceHelper.PAGE_LOGIN);
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .registerReceiver(mBroadcastReceiver,
+                        new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
+
+    }
 
     public  void initializeLogInPage(){
         etUsername.setText("");
@@ -82,21 +101,60 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
         tvLogInValidation.setVisibility(View.GONE);
     }
 
-    public void logInNow(String userName, String password){
-        final CDataSource databaseAccess = CDataSource.getInstance(this);
-        if(databaseAccess.checkLogIn(userName, password)){
-            startActivity(new Intent(LogInActivity.this, TabActivity.class));
+    public void logInNow(String email, String password){
+       APIManager.getLogInAPI(mContext, email, password);
 
-            List<DataUser> listFromDB = databaseAccess.getUser(userName);
-            int userId = listFromDB.get(0).getUserId();
-            Utilities.displayToast(this, "user exists userID: "+userId);
-
-            PreferencesConfig.setUserIDPreference(userId, this);
-            PreferencesConfig.setPasswordPreference(password, this);
-
-        }else{
-            Utilities.displayToast(this, "user does not exists, please try again");
-
-        }
     }
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+         //   Log.i(LogInTAG, "Broadcast: "+CandyLoopService.MY_SERVICE_PAYLOAD);
+
+            switch (CandyLoopService.MY_SERVICE_PAYLOAD) {
+                case ServiceHelper.PAYLOAD_LOGIN:
+
+                    DataUser du = (DataUser) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
+
+                    if (du.getStatus().equals("wrong password")){
+                        tvLogInValidation.setText(du.getStatus()+". Please try again");
+                        tvLogInValidation.setVisibility(View.VISIBLE);
+                        etPassword.setText("");
+
+                    }else if(du.getStatus().equals("user does not exist")){
+                        tvLogInValidation.setText(du.getStatus()+". Please try again");
+                        tvLogInValidation.setVisibility(View.VISIBLE);
+                        etPassword.setText("");
+
+                    }else if(du.getStatus().equals("success")){
+                        int userId = du.getUserId();
+                        String userType = du.getType();
+                        int companyId = du.getCompanyId();
+                        String department = du.getDepartmentName();
+                        String email = du.getEmail();
+                        String fullname = du.getFullName();
+
+                        //Set Preferences
+                        PreferencesConfig.setUserIDPreference(userId, mContext);
+                        PreferencesConfig.setEmailPreference(email, mContext);
+                        PreferencesConfig.setEmailPreference(fullname, mContext);
+                        PreferencesConfig.setUserTypePreference(userType, mContext);
+                        PreferencesConfig.setCompanyIdPreference(companyId, mContext);
+                        PreferencesConfig.setDepartment(department, mContext);
+                        Log.i(LogInTAG, du.toString());
+                        startActivity(new Intent(LogInActivity.this, TabActivity.class));
+
+                        Log.i(LogInTAG, "It should openActivity class");
+
+                    }else{
+                        Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
+                    }
+
+                    break;
+
+            }
+        }
+
+    };
+
+
 }
