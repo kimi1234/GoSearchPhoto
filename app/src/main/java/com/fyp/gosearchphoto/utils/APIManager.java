@@ -129,15 +129,265 @@ public class APIManager {
     }
 
     //  #4
-    public static String getUpdateAdminProfileAPI(String username, String email, String password, int userid) {
-        String updateProfileAPI = rootStringUrl + "/doUpdateProfile.php?fullname=" + username +
+    public static void getUpdateAdminProfileAPI(Context cont, String username, String email, String password, int userid) {
+        String updateProfileInitial = rootStringUrl + "/doUpdateProfile.php?fullname=" + username +
                 "&email=" + email +
                 "&password=" + password +
                 "&user_id=" + userid;
 
-        Log.i("updateProfileAPI", updateProfileAPI);
-        return updateProfileAPI;
+        Log.i("updateProfileInitial", updateProfileInitial);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String updateProfileAPI = rootStringUrl + "/doUpdateProfile.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_UPDATE_PROFILE);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_UPDATE_PROFILE);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(updateProfileAPI);
+            requestPackage.setParam("fullname", username);
+            requestPackage.setParam("email", email);
+            requestPackage.setParam("password", password);
+            requestPackage.setParam("user_id", Integer.toString(userid));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(updateProfileAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
     }
+
+
+    // #6
+    public static void getChangePasswordAPI(Context cont, int userid, String oldpassword, String newpassword) {
+        String changePassInitial = rootStringUrl + "/doChangePassword.php?user_id=" + userid +
+                "&oldpassword=" + oldpassword +
+                "&newpassword=" + newpassword;
+
+        Log.i("changePassInitial", changePassInitial);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String changePassAPI = rootStringUrl + "/doChangePassword.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CHANGE_PASSWORD);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CHANGE_PASSWORD);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(changePassAPI);
+            requestPackage.setParam("oldpassword", oldpassword);
+            requestPackage.setParam("newpassword", newpassword);
+            requestPackage.setParam("user_id", Integer.toString(userid));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(changePassAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+    //  #7
+    public static void getCompanyInfo(Context cont, int company_id) {
+        String getCompanyInfoInitial = rootStringUrl + "/doGetCompany.php?companyid=" + company_id;
+
+        Log.i("changePassInitial", getCompanyInfoInitial);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getCompanyInfoAPI = rootStringUrl + "/doGetCompany.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_COMPANY);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_COMPANY);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getCompanyInfoAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getCompanyInfoAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+
+    // #8
+    public static void getUpdateCProfileAPI(Context cont, int company_id, String company_name, String industry, String desc) {
+        String updateProfileInitial = rootStringUrl + "/doUpdateCompany.php?companyid=" + company_id +
+                "&companyname=" + company_name + "&industry=" + industry + "&desc=" + desc;
+        Log.i("updateProfileInitial", updateProfileInitial);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String updateCProfileAPI = rootStringUrl + "/doUpdateCompany.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_UPDATE_COMPANY);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_UPDATE_COMPANY);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(updateCProfileAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+            requestPackage.setParam("companyname", company_name);
+            requestPackage.setParam("industry", industry);
+            requestPackage.setParam("desc", desc);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(updateCProfileAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    // #14.1 &14.2
+    public static void getCompanyUsers(Context cont, int company_id, String keyword) {
+        String getCompanyUsersInitial = rootStringUrl + "/getCompanyUsers.php?companyid=" + company_id +
+                "&keyword=" + keyword;
+
+        Log.i("getCompanyUsersInitial", getCompanyUsersInitial);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getCompanyUsersAPI = rootStringUrl + "/getCompanyUsers.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_COMPANY_USERS);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_COMPANY_USERS);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getCompanyUsersAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+            requestPackage.setParam("keyword", keyword);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getCompanyUsersAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    // #15 & #32
+    public static void getCompanyDepartment(Context cont, int company_id, String keyword) {
+        String getCompanyDepartmentInitial = rootStringUrl + "/getCompanyDepartments.php?companyid=" + company_id +
+                "&keyword=" + keyword;
+
+        Log.i("getCompanyDeptInit", getCompanyDepartmentInitial);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getCompanyDepartmentAPI = rootStringUrl + "/getCompanyDepartments.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_COMPANY_DEPARTMENTS);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_COMPANY_DEPARTMENTS);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getCompanyDepartmentAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+            requestPackage.setParam("keyword", keyword);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getCompanyDepartmentAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+
+
+
+    }
+
+    //  #16
+    public static void getUpdateUserProfile(Context cont, String department, String type, String fullname, String email, int user_id) {
+        String updateUserProfileInit = rootStringUrl + "/doUpdateUserProfile.php?department=" + department +
+                "&type=" + type +
+                "&fullname=" + fullname +
+                "&email=" + email +
+                "&user_id=" + user_id;
+
+        Log.i("updateUserProfileInit", updateUserProfileInit);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String updateUserProfileAPI = rootStringUrl + "/doUpdateUserProfile.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_UPDATE_USER_PROFILE);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_UPDATE_USER_PROFILE);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(updateUserProfileAPI);
+            requestPackage.setParam("department", department);
+            requestPackage.setParam("fullname", fullname);
+            requestPackage.setParam("email", email);
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(updateUserProfileAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    //  #17
+    public static void getRegisterCompanyUser(Context cont, String department, String type, String fullname, String password, String email, int company_id) {
+        String getRegisterCompanyInit = rootStringUrl + "/doRegisterCompanyUser.php?department=" + department +
+                "&type=" + type +
+                "&fullname=" + fullname +
+                "&password=" + password +
+                "&email=" + email;
+
+        Log.i("getRegisterCompanyAPI", getRegisterCompanyInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getRegisterCompanyUserAPI = rootStringUrl + "/doRegisterCompanyUser.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_REGISTER_COMPANY_USER);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_REGISTER_COMPANY_USER);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getRegisterCompanyUserAPI);
+            requestPackage.setParam("department", department);
+            requestPackage.setParam("type", type);
+            requestPackage.setParam("fullname", fullname);
+            requestPackage.setParam("email", email);
+            requestPackage.setParam("company_id", Integer.toString(company_id));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getRegisterCompanyUserAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+    // #33
+    public static void getCreateDepartment(Context cont, int userid, int companyid, String departmentName, String desc) {
+        String getCreateDepartmeninitt = rootStringUrl + "/createDepartment.php?userid=" + userid +
+                "&companyid=" + companyid +
+                "&departmentName=" + departmentName +
+                "&desc=" + desc;
+
+        Log.i("getCreateDepartment", getCreateDepartmeninitt);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getCreateDepartment = rootStringUrl + "/createDepartment.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CREATE_DEPARTMENT);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CREATE_DEPARTMENT);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getCreateDepartment);
+            requestPackage.setParam("userid", Integer.toString(userid));
+            requestPackage.setParam("companyid", Integer.toString(companyid));
+            requestPackage.setParam("departmentName", departmentName);
+            requestPackage.setParam("desc", desc);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getCreateDepartment));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
 
     /*public static void getRegisterAPI(String user_type,String fullname, String email, String password, String company_name, String industry, String desc) {
         String registerAPI =rootStringUrl+ "/register.php?user_type="+user_type+
@@ -164,18 +414,18 @@ public class APIManager {
         Log.i("updateProfileAPI",updateProfileAPI);
         return updateProfileAPI;
     }
-*/
+
 
     public static String getUpdateCProfileAPI(int company_id, String company_name, String industry, String desc) {
         String updateProfileAPI =rootStringUrl+ "/updatecprofile.php?companyid="+company_id+"&companyname="+company_name+"&industry="+industry+"&desc="+desc;
         Log.i("updateCProfileAPI",updateProfileAPI);
         return updateProfileAPI;
     }
-    public static String getChangePasswordAPI(int userid, String newpassword) {
+   public static String getChangePasswordAPI(int userid, String newpassword) {
         String changePassAPI =rootStringUrl+ "/changepassword.php?user_id="+userid+"&newpassword="+newpassword;
         Log.i("changePassAPI",changePassAPI);
         return changePassAPI;
 
 
-    }
+    }*/
 }

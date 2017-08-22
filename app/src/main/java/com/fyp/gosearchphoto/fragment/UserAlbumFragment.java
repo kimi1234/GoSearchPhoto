@@ -102,7 +102,6 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
             Log.i("user_email", user_email);
             Log.i("user_type", user_type);
             Log.i("user_dept", user_dept);
-            Log.i("user_cid", "COMPANYID"+user_cid);
 
 
             displayUserAlbum();

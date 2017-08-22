@@ -6,6 +6,7 @@
     tools:context="com.fyp.gosearchphoto.fragment.UserProfileFragment">
 
     <RelativeLayout
+        android:id="@+id/rlTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
@@ -22,15 +23,27 @@
             android:textColor="@color/text_really_black"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvUserProfileValidation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:layout_below="@+id/userProfileTitle"
+            android:textColor="@color/red"
+            android:layout_marginLeft="40dp"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:text="Validation"/>
         <Spinner
             android:id="@+id/spinnerUserProfileDept"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_below="@+id/userProfileTitle"
+            android:layout_below="@+id/tvUserProfileValidation"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="5dp" />
     </RelativeLayout>
 
 
@@ -38,7 +51,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         android:orientation="vertical"
         android:weightSum="3">
 
@@ -75,7 +88,33 @@
                 android:imeOptions="actionDone"
                 android:inputType="textEmailAddress" />
 
+            <EditText
+                android:id="@+id/etUserProfilePass"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
+                android:layout_below="@+id/etUserProfileEmail"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:fontFamily="sans-serif"
+                android:hint=" Password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword" />
 
+            <EditText
+                android:id="@+id/etUserProfileCPass"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/etUserProfilePass"
+
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:fontFamily="sans-serif"
+                android:hint=" Confirm Password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword" />
 
 
 

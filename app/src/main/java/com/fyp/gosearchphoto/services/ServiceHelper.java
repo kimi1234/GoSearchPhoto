@@ -25,6 +25,11 @@ public class ServiceHelper {
     public static final String PAGE_MANAGE_DEPARTMENT = "manageDepartment";
     public static final String PAGE_MANAGE_GROUPS = "manageGroups";
 
+    // Manage USER
+    public static final String PAGE_MANAGE_USER_PROFILE = "manageUserProfile";
+    public static final String PAGE_MANAGE_USER_ALBUM = "manageUserAlbum";
+
+
     // Manage Department
     public static final String PAGE_MANAGE_DEPARTMENT_PROFILE = "manageDepartmentProfile";
     public static final String PAGE_MANAGE_DEPARTMENT_USERS = "manageDepartmentUsers";
@@ -58,8 +63,8 @@ public class ServiceHelper {
     public static final String REQUEST_LOGIN = "request_login";
 
     //#4
-    public static final String PAYLOAD_UPLOAD_PROFILE = "payload_upload_profile";
-    public static final String REQUEST_UPLOAD_PROFILE = "request_upload_profile";
+    public static final String PAYLOAD_UPDATE_PROFILE = "payload_update_profile";
+    public static final String REQUEST_UPDATE_PROFILE = "request_update_profile";
 
     //#5
     public static final String PAYLOAD_DEACTIVATE_ACCOUNT = "payload_deactivate_account";

@@ -93,7 +93,7 @@ public class PreferencesConfig {
     }
 
 
-    public static void setCompanyIdPreference(int companyid, Context context) {
+    public static void setCompany_idPreference(int companyid, Context context) {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt(PREFS_COMPANY_ID, companyid);

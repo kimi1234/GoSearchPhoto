@@ -3,6 +3,8 @@ package com.fyp.gosearchphoto.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by anamay on 6/30/17.
  */
@@ -11,18 +13,23 @@ import android.os.Parcelable;
 public class DataUser implements Parcelable {
 
     private int user_id;
-
     private String type;
-    private String fullName;
+    private String fullname;
     private String email;
     private String password;
     
-    private int companyId;
+    private int company_id;
     private String departmentName;
     private String page_data_type;
     private String status;
 
+    private List<DataUser> cUserList;
     //   private int departmentId;
+
+    //Duplicate
+    private String fullName;
+    private int id;
+    private String department;
 
     public DataUser() {
     }
@@ -30,13 +37,45 @@ public class DataUser implements Parcelable {
     public DataUser(int userId, String userType, String fullName, String email, String password
             , String departmentName, int companyId, String page_data_type, String status) {
         this.user_id = userId;
-        this.fullName = fullName;
+        this.fullname = fullName;
         this.email = email;
         this.password = password;
         this.departmentName = departmentName;
-        this.companyId = companyId;
+        this.company_id = companyId;
         this.page_data_type = page_data_type;
         this.status = status;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public List<DataUser> getcUserList() {
+        return cUserList;
+    }
+
+    public void setcUserList(List<DataUser> cUserList) {
+        this.cUserList = cUserList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getStatus() {
@@ -47,12 +86,12 @@ public class DataUser implements Parcelable {
         this.status = status;
     }
 
-    public int getUserId() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUserId(int userId) {
-        this.user_id = userId;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     public String getType() {
@@ -63,12 +102,12 @@ public class DataUser implements Parcelable {
         this.type = userType;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -116,22 +155,22 @@ public class DataUser implements Parcelable {
         this.departmentName = dname;
     }
 
-    public int getCompanyId() {
-        return companyId;
+    public int getCompany_id() {
+        return company_id;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+    public void setCompany_id(int company_id) {
+        this.company_id = company_id;
     }
 
     /*   public int getDepartmentId() {
-           return departmentId;
-       }
+               return departmentId;
+           }
 
-       public void setDepartmentId(int departmentId) {
-           this.departmentId = departmentId;
-       }
-   */
+           public void setDepartmentId(int departmentId) {
+               this.departmentId = departmentId;
+           }
+       */
     @Override
     public int describeContents() {
         return 0;
@@ -140,44 +179,41 @@ public class DataUser implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeString(this.fullName);
+        dest.writeString(this.fullname);
         dest.writeString(this.email);
         dest.writeString(this.password);
         dest.writeInt(this.user_id);
+        dest.writeInt(this.id);
         dest.writeString(this.type);
         dest.writeString(this.departmentName);
-        dest.writeInt(this.companyId);
+        dest.writeInt(this.company_id);
         dest.writeString(this.page_data_type);
         dest.writeString(this.status);
+        dest.writeList(this.cUserList);
+        dest.writeString(this.fullName);
+        dest.writeString(this.department);
 
 
     }
 
-    @Override
-    public String toString() {
-        return "DataUser{" +
-                "userId=" + user_id +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", companyId=" + companyId +
-                ", departmentName='" + departmentName + '\'' +
-                ", page_data_type='" + page_data_type + '\'' +
-                '}';
+    public static Creator<DataUser> getCREATOR() {
+        return CREATOR;
     }
 
     protected DataUser(Parcel in) {
+
         this.user_id = in.readInt();
         this.type = in.readString();
-        this.fullName = in.readString();
+        this.fullname = in.readString();
         this.email = in.readString();
         this.password = in.readString();
         this.departmentName = in.readString();
-        this.companyId = in.readInt();
+        this.department = in.readString();
+        this.company_id = in.readInt();
         this.page_data_type = in.readString();
         this.status = in.readString();
+        this.cUserList  = in.readArrayList((ClassLoader) CREATOR);
+        this.fullName = in.readString();
         //    this.departmentId = in.readInt();;
     }
 

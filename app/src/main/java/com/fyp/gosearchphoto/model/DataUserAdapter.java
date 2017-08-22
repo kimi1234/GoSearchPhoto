@@ -82,6 +82,7 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
         final DataUser item = mItems.get(position);
 
         try {
+
             switch (item.getPage_data_type()) {
                 case "No Page Name":
                     holder.ibUserAdd.setVisibility(View.GONE);
@@ -114,13 +115,15 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
 
                     break;
 
+
             }
 
-            holder.tvUserName.setText(item.getFullName());
 
-            /*Log.i("Username"+position, item.getFullName());
+            holder.tvUserName.setText(item.getFullname());
+
+            /*Log.i("Username"+position, item.getFullname());
             Log.i("USER ID"+position, String.valueOf(item.getUserId()));
-            Log.i("C ID"+position, String.valueOf(item.getCompanyId()));
+            Log.i("C ID"+position, String.valueOf(item.getCompany_id()));
             Log.i("getDepartmentName"+position, item.getDepartmentName());
             Log.i("Email"+position, item.getEmail());*/
         } catch (Exception e) {
@@ -134,12 +137,12 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Utilities.displayToast(mContext, "Page Name: " + item.getPage_data_type()
-                        + "User: " + item.getFullName());
+                        + "User: " + item.getFullname());
 
 
                 switch (item.getPage_data_type()) {
                     case "GroupProfile":
-                        groupFragment.deleteGroupUser(item.getFullName(), item.getUserId());
+                        groupFragment.deleteGroupUser(item.getFullname(), item.getUser_id());
                         mItems.remove(getPos);
                         notifyItemRemoved(getPos);
                         notifyItemRangeChanged(position, mItems.size());
@@ -148,9 +151,9 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
                     case  "CreateGroupUserTop":
                         DataUser uitem = new DataUser();
 
-                        uitem.setUserId(item.getUserId());
-                        uitem.setFullName(item.getFullName());
-                        uitem.setCompanyId(item.getCompanyId());
+                        uitem.setUser_id(item.getUser_id());
+                        uitem.setFullname(item.getFullname());
+                        uitem.setCompany_id(item.getCompany_id());
                         uitem.setEmail(item.getEmail());
                         uitem.setType(item.getType());
 
@@ -175,9 +178,9 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
                     case  "CreateGroupUserBottom":
                         DataUser uitem2 = new DataUser();
 
-                        uitem2.setUserId(item.getUserId());
-                        uitem2.setFullName(item.getFullName());
-                        uitem2.setCompanyId(item.getCompanyId());
+                        uitem2.setUser_id(item.getUser_id());
+                        uitem2.setFullname(item.getFullname());
+                        uitem2.setCompany_id(item.getCompany_id());
                         uitem2.setEmail(item.getEmail());
                         uitem2.setType(item.getType());
 
@@ -202,8 +205,8 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
                     case  "CreateDeptUserTop":
                         DataUser duitem = new DataUser();
 
-                        duitem.setUserId(item.getUserId());
-                        duitem.setFullName(item.getFullName());
+                        duitem.setUser_id(item.getUser_id());
+                        duitem.setFullname(item.getFullname());
 
 
                         // SET what page or screen is the album displayed
@@ -223,8 +226,8 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
                     case  "CreateDeptUserBottom":
                         DataUser duitem2 = new DataUser();
 
-                        duitem2.setUserId(item.getUserId());
-                        duitem2.setFullName(item.getFullName());
+                        duitem2.setUser_id(item.getUser_id());
+                        duitem2.setFullname(item.getFullname());
 
 
                         // SET what page or screen is the album displayed
@@ -263,40 +266,38 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
                     case "No Page Name":
                         Intent intent = new Intent(mContext, TabMUsersActivity.class);
 
-                        intent.putExtra(ITEM_USER_ID, item.getUserId());
-                        intent.putExtra(ITEM_USER_FULLNAME, item.getFullName());
+                        intent.putExtra(ITEM_USER_ID, item.getUser_id());
+                        intent.putExtra(ITEM_USER_FULLNAME, item.getFullname());
                         intent.putExtra(ITEM_USER_EMAIL, item.getEmail());
                         intent.putExtra(ITEM_USER_TYPE, item.getType());
-                        intent.putExtra(ITEM_USER_COMPANYID, item.getCompanyId());
+                        intent.putExtra(ITEM_USER_COMPANYID, item.getCompany_id());
                         intent.putExtra(ITEM_USER_DEPARTMENT, item.getDepartmentName());
 
 
-                        Log.i("user_fullname", Utilities.checkValueIfNull(item.getFullName()));
-                        Log.i("user_id", "USERID " + item.getUserId());
+                        Log.i("user_fullname", Utilities.checkValueIfNull(item.getFullname()));
+                        Log.i("user_id", "USERID " + item.getUser_id());
                         Log.i("user_email", Utilities.checkValueIfNull(item.getEmail()));
                         Log.i("user_type", Utilities.checkValueIfNull(item.getType()));
                         Log.i("user_dept", Utilities.checkValueIfNull(item.getDepartmentName()));
-                        Log.i("user_cid", "COMPANYID" + item.getCompanyId());
+                        Log.i("user_cid", "COMPANYID" + item.getCompany_id());
                         mContext.startActivity(intent);
                         break;
 
                     case "ManageUsers":
                         Intent intent2 = new Intent(mContext, TabMUsersActivity.class);
 
-                        intent2.putExtra(ITEM_USER_ID, item.getUserId());
-                        intent2.putExtra(ITEM_USER_FULLNAME, item.getFullName());
+                        intent2.putExtra(ITEM_USER_ID, item.getUser_id());
+                        intent2.putExtra(ITEM_USER_FULLNAME, item.getFullname());
                         intent2.putExtra(ITEM_USER_EMAIL, item.getEmail());
                         intent2.putExtra(ITEM_USER_TYPE, item.getType());
-                        intent2.putExtra(ITEM_USER_COMPANYID, item.getCompanyId());
                         intent2.putExtra(ITEM_USER_DEPARTMENT, item.getDepartmentName());
 
 
-                        Log.i("user_fullname", Utilities.checkValueIfNull(item.getFullName()));
-                        Log.i("user_id", "USERID " + item.getUserId());
+                        Log.i("user_fullname", Utilities.checkValueIfNull(item.getFullname()));
+                        Log.i("user_id", "USERID " + item.getUser_id());
                         Log.i("user_email", Utilities.checkValueIfNull(item.getEmail()));
                         Log.i("user_type", Utilities.checkValueIfNull(item.getType()));
                         Log.i("user_dept", Utilities.checkValueIfNull(item.getDepartmentName()));
-                        Log.i("user_cid", "COMPANYID" + item.getCompanyId());
                         mContext.startActivity(intent2);
                         break;
                 }
@@ -309,7 +310,7 @@ public class DataUserAdapter extends RecyclerView.Adapter<DataUserAdapter.ViewHo
         holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(mContext, "You long clicked " + item.getFullName(),
+                Toast.makeText(mContext, "You long clicked " + item.getFullname(),
                         Toast.LENGTH_SHORT).show();
                 return false;
             }

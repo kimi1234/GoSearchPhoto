@@ -10,27 +10,18 @@ import android.os.Parcelable;
 public class DataCompany implements Parcelable {
     private int company_id;
     private String status;
-    private String company_name;
+    private String companyname;
     private String industry;
-    private String description;
-    private int owner_id;
+    private String desc;
+    private int user_id;
 
-
-    public DataCompany(int company_id, String status, String company_name, String industry, String description, int owner_id) {
+    public DataCompany(int company_id, String status, String companyname, String industry, String desc, int user_id) {
         this.company_id = company_id;
         this.status = status;
-        this.company_name = company_name;
-        industry = industry;
-        this.description = description;
-        this.owner_id = owner_id;
-    }
-
-    public int getOwner_id() {
-        return owner_id;
-    }
-
-    public void setOwner_id(int owner_id) {
-        this.owner_id = owner_id;
+        this.companyname = companyname;
+        this.industry = industry;
+        this.desc = desc;
+        this.user_id = user_id;
     }
 
     public int getCompany_id() {
@@ -49,12 +40,12 @@ public class DataCompany implements Parcelable {
         this.status = status;
     }
 
-    public String getCompany_name() {
-        return company_name;
+    public String getCompanyname() {
+        return companyname;
     }
 
-    public void setCompany_name(String company_name) {
-        this.company_name = company_name;
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
     }
 
     public String getIndustry() {
@@ -62,15 +53,23 @@ public class DataCompany implements Parcelable {
     }
 
     public void setIndustry(String industry) {
-        industry = industry;
+        this.industry = industry;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override
@@ -83,9 +82,10 @@ public class DataCompany implements Parcelable {
 
         dest.writeInt(this.company_id);
         dest.writeString(this.status);
-        dest.writeString(this.company_name);
+        dest.writeString(this.companyname);
         dest.writeString(this.industry);
-        dest.writeInt(this.owner_id);
+        dest.writeString(this.desc);
+        dest.writeInt(this.user_id);
 
     }
 
@@ -94,10 +94,10 @@ public class DataCompany implements Parcelable {
         return "DataCompany{" +
                 "company_id=" + company_id +
                 ", status='" + status + '\'' +
-                ", company_name='" + company_name + '\'' +
+                ", company_name='" + companyname + '\'' +
                 ", Industry='" + industry + '\'' +
-                ", description='" + description + '\'' +
-                ", owner_id=" + owner_id +
+                ", description='" + desc + '\'' +
+                ", user_id=" + user_id +
                 '}';
     }
 
@@ -105,9 +105,9 @@ public class DataCompany implements Parcelable {
         this.company_id = in.readInt();
         this.status = in.readString();
         this.industry = in.readString();
-        this.description = in.readString();
-        this.company_name = in.readString();
-        this.owner_id = in.readInt();
+        this.desc = in.readString();
+        this.companyname = in.readString();
+        this.user_id = in.readInt();
 
 
 

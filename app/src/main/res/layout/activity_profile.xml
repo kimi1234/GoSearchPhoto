@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="115dp"
             android:gravity="center_horizontal"
-            android:text="Update Profile"
+            android:text="Profile"
             android:textSize="24sp" />
 
         <ImageView
@@ -128,7 +128,7 @@
             android:height="40dp"
             android:background="@color/button_lightblue"
             android:padding="10dp"
-            android:text="Save"></Button>
+            android:text="Update"></Button>
 
 
         <Button

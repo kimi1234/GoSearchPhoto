@@ -24,7 +24,6 @@ import java.util.List;
 
 public class DataDepartmentAdapter extends RecyclerView.Adapter<DataDepartmentAdapter.ViewHolder> {
 
-    public static final String ITEM_DEPT_ID = "dept_id";
     public static final String ITEM_DEPT_NAME = "dept_name";
     public static final String ITEM_DEPT_COMPANYID = "dept_cID";
     public static final String ITEM_DEPT_DESC = "dept_desc";
@@ -139,9 +138,7 @@ public class DataDepartmentAdapter extends RecyclerView.Adapter<DataDepartmentAd
                     case "ManageDepartment":
                         Intent intent = new Intent(mContext, TabMDepartmentActivity.class);
 
-                        intent.putExtra(ITEM_DEPT_ID, item.getDepartment_id());
                         intent.putExtra(ITEM_DEPT_NAME, item.getDepartment_name());
-                        intent.putExtra(ITEM_DEPT_COMPANYID, item.getCompany_id());
                         intent.putExtra(ITEM_DEPT_DESC, item.getDescription());
 
 

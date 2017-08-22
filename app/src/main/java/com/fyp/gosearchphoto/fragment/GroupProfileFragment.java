@@ -267,9 +267,9 @@ public class GroupProfileFragment extends Fragment implements View.OnClickListen
 
     public void getBottomListValues(){
         for(DataUser b : bottomDataItems) {
-            Log.i("getUserId",""+b.getUserId());
-            Log.i("getFullName",""+b.getFullName());
-            Log.i("getCompanyId",""+ b.getCompanyId());
+            Log.i("getUserId",""+b.getUser_id());
+            Log.i("getFullName",""+b.getFullname());
+            Log.i("getCompanyId",""+ b.getCompany_id());
             Log.i("getPage_data_type", b.getPage_data_type());
             Log.i("~~~~~~","~~~~~~~~~~~~");
             //update, check for collisions, etc
@@ -278,7 +278,7 @@ public class GroupProfileFragment extends Fragment implements View.OnClickListen
 
     public boolean checkBottomItemExists(int userID){
         for (DataUser item : bottomDataItems) {
-            if (item.getUserId()==userID) {
+            if (item.getUser_id()==userID) {
                 return true;
             }
         }

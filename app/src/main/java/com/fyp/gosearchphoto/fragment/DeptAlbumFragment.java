@@ -20,7 +20,6 @@ import com.fyp.gosearchphoto.R;
 import com.fyp.gosearchphoto.database.CDataSource;
 import com.fyp.gosearchphoto.model.DataAlbum;
 import com.fyp.gosearchphoto.model.DataAlbumAdapter;
-import com.fyp.gosearchphoto.model.DataDepartmentAdapter;
 import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
 
@@ -85,9 +84,11 @@ public class DeptAlbumFragment extends Fragment implements View.OnClickListener 
         Bundle extras = getActivity().getIntent().getExtras();
         dept_id =0;
         if (extras != null) {
-            dept_id = extras.getInt(DataDepartmentAdapter.ITEM_DEPT_ID);
 
-            displayDeptAlbum();
+            //TODO: SHould call API dept album
+//            dept_id = extras.getInt(DataDepartmentAdapter.ITEM_DEPT_ID);
+
+  //          displayDeptAlbum();
         }
 
         return vDeptAlbum;

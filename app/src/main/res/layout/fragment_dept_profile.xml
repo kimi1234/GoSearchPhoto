@@ -9,90 +9,104 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="1">
-    <RelativeLayout
-        android:id="@+id/layoutDeptProfileTop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_weight="0.55"
-        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/deptProfileTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="40dp"
-        android:textColor="@color/text_really_black"
-        android:gravity="left"
-        android:textStyle="bold"
-        android:text="Department Information"
-        android:textSize="20sp" />
-
-
-    <EditText
-        android:id="@+id/etDeptProfileName"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:fontFamily="sans-serif"
-        android:hint=" Department Name"
-        android:foregroundTint="@color/textColor"
-        android:backgroundTint="@color/textColor"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/deptProfileTitle"
-        android:imeOptions="actionDone"
-        android:inputType="text"
-        />
-        <EditText
-            android:id="@+id/etDeptProfileDesc"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_below="@+id/etDeptProfileName"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif"
-            android:hint="Description"
-            android:imeOptions="actionDone"
-            android:inputType="textImeMultiLine" />
-
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight=".45"
-        >
-
-        <Button
-            android:id="@+id/btnDeptProfileSave"
+        <RelativeLayout
+            android:id="@+id/layoutDeptProfileTop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="20dp"
-            android:height="40dp"
-            android:background="@color/button_lightblue"
-            android:padding="10dp"
-            android:layout_below="@+id/layoutDeptProfileTop"
+            android:layout_marginTop="0dp"
+            android:layout_weight="0.55"
+            android:orientation="vertical">
 
-            android:text="Save"></Button>
-        <Button
-            android:id="@+id/btnDeptProfileDelete"
+            <TextView
+                android:id="@+id/deptProfileTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:gravity="left"
+                android:text="Department Information"
+                android:textColor="@color/text_really_black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDeptProfileValidation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/deptProfileTitle"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif"
+                android:gravity="left"
+                android:text="Validation"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/etDeptProfileName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/tvDeptProfileValidation"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/textColor"
+                android:fontFamily="sans-serif"
+                android:foregroundTint="@color/textColor"
+                android:hint=" Department Name"
+                android:imeOptions="actionDone"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/etDeptProfileDesc"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/etDeptProfileName"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif"
+                android:hint="Description"
+                android:imeOptions="actionDone"
+                android:inputType="textImeMultiLine" />
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="40dp"
-            android:height="40dp"
-            android:background="@color/button_red"
-            android:padding="10dp"
-            android:layout_below="@+id/layoutDeptProfileTop"
+            android:layout_weight=".45"
+            android:orientation="vertical">
 
-            android:text="Delete"></Button>
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnDeptProfileSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutDeptProfileTop"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="20dp"
+                android:height="40dp"
+                android:background="@color/button_lightblue"
+                android:padding="10dp"
+
+                android:text="Save"></Button>
+
+            <Button
+                android:id="@+id/btnDeptProfileDelete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutDeptProfileTop"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="40dp"
+                android:height="40dp"
+                android:background="@color/button_red"
+                android:padding="10dp"
+
+                android:text="Delete"></Button>
+        </LinearLayout>
     </LinearLayout>
 
 </FrameLayout>

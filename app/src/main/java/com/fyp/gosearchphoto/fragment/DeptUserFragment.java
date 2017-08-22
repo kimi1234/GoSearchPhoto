@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
 import com.fyp.gosearchphoto.database.CDataSource;
-import com.fyp.gosearchphoto.model.DataDepartmentAdapter;
 import com.fyp.gosearchphoto.model.DataUser;
 import com.fyp.gosearchphoto.model.DataUserAdapter;
 import com.fyp.gosearchphoto.utils.PreferencesConfig;
@@ -76,8 +75,10 @@ public class DeptUserFragment extends Fragment implements View.OnClickListener {
         getDepartmentId= 0;
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
-            getDepartmentId = extras.getInt(DataDepartmentAdapter.ITEM_DEPT_ID);
-            initializeDepartmentUserList();
+            //TODO: Should call API to get deptUsers
+
+//            getDepartmentId = extras.getInt(DataDepartmentAdapter.ITEM_DEPT_ID);
+//            initializeDepartmentUserList();
 
         }
             ibDeptUserAdd.setOnClickListener(this);
@@ -157,8 +158,8 @@ public class DeptUserFragment extends Fragment implements View.OnClickListener {
     }
     public void getBottomListValues(){
         for(DataUser b : bottomDataItems) {
-            Log.i("getUserId",""+b.getUserId());
-            Log.i("getFullName",""+b.getFullName());
+            Log.i("getUserId",""+b.getUser_id());
+            Log.i("getFullName",""+b.getFullname());
             Log.i("getDeptId",""+getDepartmentId);
             //update, check for collisions, etc
         }
@@ -216,7 +217,7 @@ public class DeptUserFragment extends Fragment implements View.OnClickListener {
     }
     public boolean checkBottomItemExists(int userID){
         for (DataUser item : bottomDataItems) {
-            if (item.getUserId()==userID) {
+            if (item.getUser_id()==userID) {
                 return true;
             }
         }

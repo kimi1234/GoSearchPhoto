@@ -144,16 +144,16 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_FULLNAME)));
             item.setEmail(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_EMAIL)));
             item.setPassword(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_PASSWORD)));
 
-            item.setCompanyId(cursor.getInt(
+            item.setCompany_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_COMPANYID)));
             item.setType(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_TYPE)));
@@ -213,16 +213,16 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_FULLNAME)));
             item.setEmail(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_EMAIL)));
             item.setPassword(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_PASSWORD)));
 
-            item.setCompanyId(cursor.getInt(
+            item.setCompany_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_COMPANYID)));
             item.setType(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_TYPE)));
@@ -284,16 +284,16 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_FULLNAME)));
             item.setEmail(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_EMAIL)));
             item.setPassword(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_PASSWORD)));
 
-            item.setCompanyId(cursor.getInt(
+            item.setCompany_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_COMPANYID)));
             item.setType(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_TYPE)));
@@ -303,15 +303,15 @@ public class CDataSource {
             item.setPage_data_type(page_name);
 
             if(page_name.equals("CreateGroupUserTop")) {
-                if (gfrag.checkBottomItemExists(item.getUserId())) {
-                    Log.i("item already exist", "in the bottom list ID:" + item.getUserId());
+                if (gfrag.checkBottomItemExists(item.getUser_id())) {
+                    Log.i("item already exist", "in the bottom list ID:" + item.getUser_id());
 
                 } else {
                     dataItems.add(item);
                 }
             }else if (page_name.equals("CreateDeptUserTop")){
-                if (dufrag.checkBottomItemExists(item.getUserId())) {
-                    Log.i("item already exist", "in the bottom list ID:" + item.getUserId());
+                if (dufrag.checkBottomItemExists(item.getUser_id())) {
+                    Log.i("item already exist", "in the bottom list ID:" + item.getUser_id());
 
                 } else {
                     dataItems.add(item);
@@ -372,16 +372,16 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_FULLNAME)));
             item.setEmail(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_EMAIL)));
             item.setPassword(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_PASSWORD)));
 
-            item.setCompanyId(cursor.getInt(
+            item.setCompany_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_COMPANYID)));
             item.setType(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_TYPE)));
@@ -439,9 +439,9 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_FULLNAME)));
             item.setEmail(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_USER_EMAIL)));
@@ -918,9 +918,9 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_GRPUSER_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_GRPUSER_USER_NAME)));
             item.setPage_data_type(page_name);
             dataItems.add(item);
@@ -1162,9 +1162,9 @@ public class CDataSource {
 
         while (cursor.moveToNext()) {
             DataUser item = new DataUser();
-            item.setUserId(cursor.getInt(
+            item.setUser_id(cursor.getInt(
                     cursor.getColumnIndex(ItemTable.COLUMN_DEPTUSER_USER_ID)));
-            item.setFullName(cursor.getString(
+            item.setFullname(cursor.getString(
                     cursor.getColumnIndex(ItemTable.COLUMN_DEPTUSER_USER_NAME)));
 
 

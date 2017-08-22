@@ -70,9 +70,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         public void onReceive(Context context, Intent intent) {
 
             switch (CandyLoopService.MY_SERVICE_PAYLOAD) {
-                case "ItemsFeedPayload":
-
-                    break;
                 case ServiceHelper.PAYLOAD_CHECKUSER_EXIST:
                     DataUser du = (DataUser) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
                     if (du.getStatus().equals("user does not exist")){
@@ -87,8 +84,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-                    }else if(du.getStatus().equals("user does exist")){
-                        Utilities.displayToast(mContext, "email already exists. Please try again");
+                    }else if(du.getStatus().equals("user exist")){
+                        Utilities.displayToast(mContext, "Email already exists. Please try again");
                     }else{
                         Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
                     }
@@ -174,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
 
     }
-    public void registerNow(String email) {
+    private void registerNow(String email) {
         Log.i(TAG, "register now called");
         APIManager.checkUserExist(mContext, email);
 

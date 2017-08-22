@@ -126,20 +126,21 @@ public class LogInActivity extends AppCompatActivity implements View.OnClickList
                         etPassword.setText("");
 
                     }else if(du.getStatus().equals("success")){
-                        int userId = du.getUserId();
+                        int userId = du.getUser_id();
                         String userType = du.getType();
-                        int companyId = du.getCompanyId();
+                        int companyId = du.getCompany_id();
                         String department = du.getDepartmentName();
                         String email = du.getEmail();
-                        String fullname = du.getFullName();
+                        String fullname = du.getFullname();
 
                         //Set Preferences
                         PreferencesConfig.setUserIDPreference(userId, mContext);
                         PreferencesConfig.setEmailPreference(email, mContext);
-                        PreferencesConfig.setEmailPreference(fullname, mContext);
+                        PreferencesConfig.setFullnamePreference(fullname, mContext);
                         PreferencesConfig.setUserTypePreference(userType, mContext);
-                        PreferencesConfig.setCompanyIdPreference(companyId, mContext);
+                        PreferencesConfig.setCompany_idPreference(companyId, mContext);
                         PreferencesConfig.setDepartment(department, mContext);
+                        Log.i(LogInTAG, "FULLNAME :"+fullname);
                         Log.i(LogInTAG, du.toString());
                         startActivity(new Intent(LogInActivity.this, TabActivity.class));
 

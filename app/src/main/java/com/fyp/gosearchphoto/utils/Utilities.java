@@ -104,13 +104,23 @@ public class Utilities {
     }
 
     //Bottom Manager Menu
-    public static List<Item> createItems() {
+    public static List<Item> createItems(Context cont) {
         ArrayList<Item> items = new ArrayList<>();
-        items.add(new Item(R.drawable.manage_company, "Company Profile"));
-        items.add(new Item(R.drawable.manage_department, "Manage Department"));
-        items.add(new Item(R.drawable.manage_group, "Manage Group"));
-        items.add(new Item(R.drawable.manage_user, "Manage User"));
-        items.add(new Item(R.drawable.manage_album, "Manage Project Album"));
+
+        if(PreferencesConfig.getUserTypePreference(cont).equals("Admin")){
+            items.add(new Item(R.drawable.manage_company, "Company Profile"));
+            items.add(new Item(R.drawable.manage_department, "Manage Department"));
+            items.add(new Item(R.drawable.manage_group, "Manage Group"));
+            items.add(new Item(R.drawable.manage_user, "Manage User"));
+            items.add(new Item(R.drawable.manage_album, "Manage Project Album"));
+        }else{
+            items.add(new Item(R.drawable.manage_company, "Company Profile"));
+            items.add(new Item(R.drawable.manage_group, "Manage Group"));
+            items.add(new Item(R.drawable.manage_album, "Manage Project Album"));
+        }
+
+
+
         return items;
     }
 
@@ -352,6 +362,15 @@ public class Utilities {
         }else{
             displayToast(mContext, "it is not showing");
         }
+    }
 
+    public static void enableEditText (EditText et){
+        et.setEnabled(true);
+        et.setFocusable(true);
+
+    }
+    public static void disableEditText (EditText et){
+        et.setEnabled(false);
+        et.setFocusable(false);
     }
 }
