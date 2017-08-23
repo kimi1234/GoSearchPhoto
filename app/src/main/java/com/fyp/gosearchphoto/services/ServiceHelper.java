@@ -13,6 +13,7 @@ public class ServiceHelper {
     public static final String PAGE_REGISTER_ADMIN = "registerAdminPage";
     public static final String PAGE_REGISTER_COMPANY = "registerCompanyPage";
     public static final String PAGE_CHANGE_PASSWORD = "changePassword";
+    public static final String PAGE_CHANGE_EMPLOYEE_PASSWORD = "changeEPassword";
     public static final String PAGE_PROFILE = "profilePage";
 
     public static final String PAGE_PUBLIC = "publicPage";

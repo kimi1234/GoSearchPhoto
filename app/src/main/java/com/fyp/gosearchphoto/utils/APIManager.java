@@ -358,9 +358,44 @@ public class APIManager {
             Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
         }
     }
+    // #18
+    public static void getChangeUserPasswordAPI(Context cont, int user_id, String newpassword, int admin_id, String adminpassword) {
+        String changePassAPI = rootStringUrl + "/doChangeUserPassword.php?user_id=" + user_id +
+                "&newpassword=" + newpassword +
+                "&admin_id=" + admin_id +
+                "&adminpassword=" + adminpassword;
+
+
+        Log.i("getChangeUserPassword", changePassAPI);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String changeEPassAPI = rootStringUrl + "/doChangeUserPassword.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CHANGE_USER_PASSWORD);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CHANGE_USER_PASSWORD);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(changeEPassAPI);
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+            requestPackage.setParam("newpassword", newpassword);
+            requestPackage.setParam("admin_id", Integer.toString(admin_id));
+            requestPackage.setParam("adminpassword", adminpassword);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(changeEPassAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+
+
+
+
+    }
     // #33
     public static void getCreateDepartment(Context cont, int userid, int companyid, String departmentName, String desc) {
-        String getCreateDepartmeninitt = rootStringUrl + "/createDepartment.php?userid=" + userid +
+        String getCreateDepartmeninitt = rootStringUrl + "/doCreateDepartment.php?userid=" + userid +
                 "&companyid=" + companyid +
                 "&departmentName=" + departmentName +
                 "&desc=" + desc;
@@ -368,7 +403,7 @@ public class APIManager {
         Log.i("getCreateDepartment", getCreateDepartmeninitt);
         boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
 
-        String getCreateDepartment = rootStringUrl + "/createDepartment.php";
+        String getCreateDepartment = rootStringUrl + "/doCreateDepartment.php";
         if (networkOk) {
             CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CREATE_DEPARTMENT);
             CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CREATE_DEPARTMENT);
@@ -388,6 +423,30 @@ public class APIManager {
         }
     }
 
+    //  #19
+    public static void getAlbumListByUser(Context cont, int user_id) {
+        String getAlbumListByUserInit = rootStringUrl + "/getAlbumListByUser.php?user_id=" + user_id;
+
+        Log.i("getAlbumListByUserAPI", getAlbumListByUserInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getAlbumListByUserAPI = rootStringUrl + "/getAlbumListByUser.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CREATE_DEPARTMENT);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CREATE_DEPARTMENT);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getAlbumListByUserAPI);
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getAlbumListByUserAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
 
     /*public static void getRegisterAPI(String user_type,String fullname, String email, String password, String company_name, String industry, String desc) {
         String registerAPI =rootStringUrl+ "/register.php?user_type="+user_type+

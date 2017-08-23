@@ -133,6 +133,8 @@ public class DeptProfileFragment extends Fragment implements View.OnClickListene
             tvDeptProfileValidation.setText("Please enter all fields");
             tvDeptProfileValidation.setVisibility(View.VISIBLE);
         }else {
+            tvDeptProfileValidation.setVisibility(View.INVISIBLE);
+
             if (btnDeptProfileSave.getText().equals("Create")) {
                 APIManager.getCreateDepartment(mContext,
                         PreferencesConfig.getUserIDPreference(mContext),
@@ -161,7 +163,7 @@ public class DeptProfileFragment extends Fragment implements View.OnClickListene
                     // Update Successful
                     if (duData1.getStatus().equals("department already exist")) {
                         tvDeptProfileValidation.setVisibility(View.VISIBLE);
-                        tvDeptProfileValidation.setText("Department Name already exist. Please try again");
+                        tvDeptProfileValidation.setText("Department name already exist. Please try again");
                     }else if(duData1.getStatus().equals("success")){
                         Utilities.displayToast(mContext, "Department successfully created");
                         startActivity(new Intent(mContext, ManageDepartmentActivity.class));

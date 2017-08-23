@@ -126,8 +126,10 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
             btnUserProfileCP.setVisibility(View.VISIBLE);
             etUserProfilePass.setVisibility(View.GONE);
             etUserProfileCPass.setVisibility(View.GONE);
+            registerBroadcast();
+            getDepartmentListNow();
         } else {
-
+            user_id=0;
             btnUserProfileRegister.setText("Register");
 
             btnUserProfileDeleteAcct.setVisibility(View.GONE);
@@ -139,8 +141,6 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
         }
         tvUserProfileValidation.setVisibility(View.INVISIBLE);
 
-        registerBroadcast();
-        getDepartmentListNow();
 
         Utilities.hideKeyboardNow(getActivity().getWindow());
 
@@ -150,6 +150,21 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Do your Work
+            if (user_id != 0) {
+                registerBroadcast();
+                getDepartmentListNow();
+            }
+        } else {
+            // Do your Work
+            LocalBroadcastManager.getInstance(mContext)
+                    .unregisterReceiver(mBroadcastReceiver);
+        }
+    }
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

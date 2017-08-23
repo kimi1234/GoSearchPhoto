@@ -1,5 +1,7 @@
 package com.fyp.gosearchphoto.utils;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -19,6 +21,8 @@ public class HttpHelper  {
             throws IOException {
 
         String address = requestPackage.getEndpoint();
+        Log.i("HttpHelper Address: ", address);
+
         String encodedParams = requestPackage.getEncodedParams();
 
         if (requestPackage.getMethod().equals("GET") &&

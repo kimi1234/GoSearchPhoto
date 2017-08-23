@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.fyp.gosearchphoto.model.DataAlbum;
 import com.fyp.gosearchphoto.model.DataCompany;
 import com.fyp.gosearchphoto.model.DataDepartment;
 import com.fyp.gosearchphoto.model.DataStatus;
@@ -37,7 +38,8 @@ public class CandyLoopService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         RequestPackage requestPackage;
 
-
+        Log.i("CLService SERVICE", MY_SERVICE_PAGE);
+        Log.i("CLService REQUEST", ServiceHelper.REQUEST_CHECKUSER_EXIST);
         if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_REGISTER_ADMIN)) {
 
             requestPackage =
@@ -344,6 +346,67 @@ public class CandyLoopService extends IntentService {
                     Log.i("Response", response);
                     messageIntent = new Intent(MY_SERVICE_PAGE);
                     messageIntent.putExtra(MY_SERVICE_PAYLOAD, ddItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_CHANGE_EMPLOYEE_PASSWORD)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+                case ServiceHelper.REQUEST_CHANGE_USER_PASSWORD:
+                    gson = new Gson();
+                    DataStatus ddItems = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, ddItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MANAGE_USER_ALBUM)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+                case ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_USER:
+                    gson = new Gson();
+                    DataAlbum ddItems = gson.fromJson(response, DataAlbum.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, ddItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+
+                case ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_OWNER:
+                    gson = new Gson();
+                    DataAlbum daItems = gson.fromJson(response, DataAlbum.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
                     manager = LocalBroadcastManager.getInstance(getApplicationContext());
                     manager.sendBroadcast(messageIntent);
                     break;

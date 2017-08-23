@@ -2,6 +2,7 @@ package com.fyp.gosearchphoto.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -20,11 +21,16 @@ public class RequestPackage
     private Map<String, String> params = new HashMap<>();
 
     public String getEndpoint() {
+        Log.i("Request Package", "GETEndPoint: "+endPoint);
+
         return endPoint;
     }
 
     public void setEndPoint(String endPoint) {
+
         this.endPoint = endPoint;
+
+        Log.i("Request Package", "SETEndPoint: "+endPoint);
     }
 
     public String getMethod() {

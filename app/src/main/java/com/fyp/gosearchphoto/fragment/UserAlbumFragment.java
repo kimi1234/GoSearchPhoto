@@ -1,9 +1,13 @@
 package com.fyp.gosearchphoto.fragment;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -21,6 +25,9 @@ import com.fyp.gosearchphoto.database.CDataSource;
 import com.fyp.gosearchphoto.model.DataAlbum;
 import com.fyp.gosearchphoto.model.DataAlbumAdapter;
 import com.fyp.gosearchphoto.model.DataUserAdapter;
+import com.fyp.gosearchphoto.services.CandyLoopService;
+import com.fyp.gosearchphoto.services.ServiceHelper;
+import com.fyp.gosearchphoto.utils.APIManager;
 import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
 
@@ -77,39 +84,32 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
         View vUserAlbum = inflater.inflate(R.layout.fragment_user_album, container, false);
         ibUserAlbumAdd = (ImageButton) vUserAlbum.findViewById(R.id.ibUserAlbumAdd);
 
-        mRecyclerView = (RecyclerView)vUserAlbum.findViewById(R.id.rvAddedAlbum);
+        mRecyclerView = (RecyclerView) vUserAlbum.findViewById(R.id.rvAddedAlbum);
         ibUserAlbumAdd.setOnClickListener(this);
 
 
         mContext = getContext();
 
 
-
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
-            user_fullname = extras.getString(DataUserAdapter.ITEM_USER_FULLNAME);
             user_id = extras.getInt(DataUserAdapter.ITEM_USER_ID);
-            user_email = extras.getString(DataUserAdapter.ITEM_USER_EMAIL);
+           /* user_email = extras.getString(DataUserAdapter.ITEM_USER_EMAIL);
             user_type = extras.getString(DataUserAdapter.ITEM_USER_TYPE);
             user_cid = extras.getInt(DataUserAdapter.ITEM_USER_COMPANYID);
             user_dept = extras.getString(DataUserAdapter.ITEM_USER_DEPARTMENT);
-            //The key argument here must match that used in the other activity
-
-
-
+            user_fullname = extras.getString(DataUserAdapter.ITEM_USER_FULLNAME);
             Log.i("user_fullname", user_fullname);
-            Log.i("user_id", "USERID "+user_id);
             Log.i("user_email", user_email);
             Log.i("user_type", user_type);
             Log.i("user_dept", user_dept);
+            */
+            Log.i("user_id", "USERID:  " + user_id);
 
 
-            displayUserAlbum();
-
+        } else {
+            user_id = 0;
         }
-
-
-
 
 
         return vUserAlbum;
@@ -118,7 +118,7 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ibUserAlbumAdd:
                 showAddAlbum(getContext());
                /*
@@ -130,16 +130,31 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Do your Work
+            if (user_id != 0) {
+                registerBroadcast();
+                displayUserAlbum();
+            }
+        } else {
+            // Do your Work
+            LocalBroadcastManager.getInstance(mContext)
+                    .unregisterReceiver(mBroadcastReceiver);
+        }
+    }
 
     public void showAddAlbum(Context context) {
-         CDataSource mDataSource_popup;
+        CDataSource mDataSource_popup;
 
         final Dialog album_dialog = new Dialog(context);
         album_dialog.setContentView(R.layout.popup_add_existing_album);
         album_dialog.setTitle("Add Existing Album");
 
         tvDeptTitle = (TextView) album_dialog.findViewById(R.id.lblThirdLayerDepartmentTitle);
-        etMUserAlbumSearch = (EditText)album_dialog.findViewById(R.id.etMUserAlbumSearch);
+        etMUserAlbumSearch = (EditText) album_dialog.findViewById(R.id.etMUserAlbumSearch);
         dialogButtonCancel = (Button) album_dialog.findViewById(R.id.dialog_btn_cancel);
         dialogButtonOK = (Button) album_dialog.findViewById(R.id.dialog_btn_ok);
         rvExistingAlbum = (RecyclerView) album_dialog.findViewById(R.id.rvExistingAlbum);
@@ -166,7 +181,7 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
         displayTopItemList();
 
         String getDeptName;
-        if(user_dept !=null) {
+        if (user_dept != null) {
             if (user_dept.equals("No Department")) {
                 getDeptName = "Administrator";
             } else {
@@ -203,10 +218,10 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
     private void displayTopItemList() {
         CDataSource mDataSource_popup;
         mDataSource_popup = CDataSource.getInstance(getContext());
-        PAGE_NAME ="DBExistingAlbumTop";
+        PAGE_NAME = "DBExistingAlbumTop";
         topDataItems = mDataSource_popup.getAllAlbumItems(
-               PreferencesConfig.getUserIDPreference(getContext()),
-               PAGE_NAME);
+                PreferencesConfig.getUserIDPreference(getContext()),
+                PAGE_NAME);
 
         topAdapter = new DataAlbumAdapter(getContext(), topDataItems, UserAlbumFragment.this, null, null, null);
         Log.i("get count", "" + topAdapter.getItemCount());
@@ -214,62 +229,62 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
         rvExistingAlbum.setAdapter(topAdapter);
     }
 
-    public void displayUserAlbum(){
-        mDataSource = CDataSource.getInstance(getContext());
+    public void displayUserAlbum() {
+        APIManager.getAlbumListByUser(mContext, user_id);
+    }
 
-        PAGE_NAME = "ManageUserAlbum";
-        List<DataAlbum> listFromDB2 = mDataSource.getAllAlbumItems(user_id, PAGE_NAME);
 
-        adapter = new DataAlbumAdapter(getContext(), listFromDB2, UserAlbumFragment.this, null, null, null);
+    public void setAlbumDataAdapter(List<DataAlbum> da) {
+        adapter = new DataAlbumAdapter(getContext(), da, UserAlbumFragment.this, null, null, null);
         Log.i("get count", "" + adapter.getItemCount());
         adapter.notifyDataSetChanged();
         mRecyclerView.setAdapter(adapter);
-
-
     }
-    public void instantiateBottomList(){
+
+    public void instantiateBottomList() {
         bottomDataItems = new ArrayList<>();
     }
-    public void addbottomItem(DataAlbum item){
+
+    public void addbottomItem(DataAlbum item) {
         bottomDataItems.add(item);
-        bottomAdapter= new DataAlbumAdapter(getContext(), bottomDataItems, UserAlbumFragment.this, null, null, null);
+        bottomAdapter = new DataAlbumAdapter(getContext(), bottomDataItems, UserAlbumFragment.this, null, null, null);
         bottomAdapter.notifyDataSetChanged();
         rvToAddAlbum.setAdapter(bottomAdapter);
     }
 
-    public void addtopItem(DataAlbum item){
+    public void addtopItem(DataAlbum item) {
         topDataItems.add(item);
-        topAdapter= new DataAlbumAdapter(getContext(), topDataItems, UserAlbumFragment.this, null, null, null);
+        topAdapter = new DataAlbumAdapter(getContext(), topDataItems, UserAlbumFragment.this, null, null, null);
         topAdapter.notifyDataSetChanged();
         rvExistingAlbum.setAdapter(topAdapter);
     }
 
-    public void getBottomListValues(){
-        for(DataAlbum b : bottomDataItems) {
-            Log.i("getAlbumId",""+b.getAlbumId());
-            Log.i("getOwner_id",""+b.getOwner_id());
+    public void getBottomListValues() {
+        for (DataAlbum b : bottomDataItems) {
+            Log.i("getAlbumId", "" + b.getAlbumId());
+            Log.i("getOwner_id", "" + b.getOwner_id());
             Log.i("getAlbum_name", b.getAlbum_name());
             Log.i("getOwner_name", b.getOwner_name());
             Log.i("getDescription", b.getDescription());
             Log.i("getPrivacy_type", b.getPrivacy_type());
             Log.i("setPage_data_type", b.getPrivacy_type());
-            Log.i("~~~~~~","~~~~~~~~~~~~");
+            Log.i("~~~~~~", "~~~~~~~~~~~~");
             //update, check for collisions, etc
         }
     }
 
-    public boolean checkBottomItemExists(int albumID){
+    public boolean checkBottomItemExists(int albumID) {
         for (DataAlbum item : bottomDataItems) {
-            if (item.getAlbumId()==albumID) {
+            if (item.getAlbumId() == albumID) {
                 return true;
             }
         }
         return false;
     }
 
-    public void performAlbumSearch(){
-        PAGE_NAME ="DBExistingAlbumTop";
-      //  etMUserAlbumSearch.clearFocus();
+    public void performAlbumSearch() {
+        PAGE_NAME = "DBExistingAlbumTop";
+        //  etMUserAlbumSearch.clearFocus();
 
 
         ArrayList<DataAlbum> listFromDB = mDataSource.getAllAlbumByNameFrag(
@@ -277,12 +292,76 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
                 PAGE_NAME, getKeywordSearch, UserAlbumFragment.this, null, null);
 
 
-        if(listFromDB.size()>0) {
+        if (listFromDB.size() > 0) {
             topAdapter = new DataAlbumAdapter(getContext(), listFromDB, UserAlbumFragment.this, null, null, null);
             topAdapter.notifyDataSetChanged();
             rvExistingAlbum.setAdapter(topAdapter);
         }
-        Log.i("SIZE", "SIZE: "+listFromDB.size());
+        Log.i("SIZE", "SIZE: " + listFromDB.size());
     }
+
+
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //   Log.i(LogInTAG, "Broadcast: "+CandyLoopService.MY_SERVICE_PAYLOAD);
+
+            switch (CandyLoopService.MY_SERVICE_PAYLOAD) {
+
+
+                case ServiceHelper.PAYLOAD_GET_ALBUM_LIST_BY_USER:
+
+                    DataAlbum ddata = (DataAlbum) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
+
+                    if (ddata.getStatus().equals("no data")) {
+                        Utilities.displayToast(mContext, "User has no album");
+
+                    } else if (ddata.getStatus().equals("success")) {
+                        List<DataAlbum> listFromServer = ddata.getAlbumList();
+                        PAGE_NAME = "ManageUserAlbum";
+
+                        List<DataAlbum> dataItems = new ArrayList<>();
+
+
+                        for (int i = 0; i < listFromServer.size(); i++) {
+                            DataAlbum item = new DataAlbum();
+                            item.setAlbumId(listFromServer.get(i).getAlbum_id());
+                            item.setAlbum_name(listFromServer.get(i).getName());
+                            item.setOwner_id(listFromServer.get(i).getOwner_id());
+                            item.setPage_data_type(PAGE_NAME);
+                            dataItems.add(item);
+
+                            Log.i("Album name", listFromServer.get(i).getName() + " added");
+                        }
+                        setAlbumDataAdapter(dataItems);
+
+
+                    } else {
+                        Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
+                    }
+
+                    break;
+            }
+        }
+
+    };
+
+
+    public void registerBroadcast() {
+        CandyLoopService.setMyServicePage(ServiceHelper.PAGE_MANAGE_USER_ALBUM);
+        LocalBroadcastManager.getInstance(mContext)
+                .registerReceiver(mBroadcastReceiver,
+                        new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
+
+    }
+
+
+  /*  @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        LocalBroadcastManager.getInstance(mContext)
+                .unregisterReceiver(mBroadcastReceiver);
+    }*/
 }
 
