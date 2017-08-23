@@ -1,10 +1,13 @@
 package com.fyp.gosearchphoto.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,10 +18,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
 import com.fyp.gosearchphoto.activity.ManageAlbumActivity;
 import com.fyp.gosearchphoto.model.DataAlbumAdapter;
+import com.fyp.gosearchphoto.model.DataStatus;
+import com.fyp.gosearchphoto.services.CandyLoopService;
+import com.fyp.gosearchphoto.services.ServiceHelper;
+import com.fyp.gosearchphoto.utils.APIManager;
+import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
 
 public class AlbumProfileFragment extends Fragment implements  View.OnClickListener {
@@ -29,10 +38,13 @@ public class AlbumProfileFragment extends Fragment implements  View.OnClickListe
 
     private EditText etAlbumProfileName;
     private EditText etAlbumProfileDesc;
+    private TextView tvAlbumProfileValidation;
     private Spinner spinnerAlbumProfileType;
     private Button btnAlbumProfileSave;
     private Button btnAlbumProfileDelete ;
     private Context mContext;
+
+    private String getAlbumName, getDescription, getPrivacyType;
 
     public AlbumProfileFragment() {
         // Required empty public constructor
@@ -52,7 +64,7 @@ public class AlbumProfileFragment extends Fragment implements  View.OnClickListe
        View vAlbumProfile = inflater.inflate(R.layout.fragment_album_profile, container, false);
 
 
-
+        tvAlbumProfileValidation = (TextView)vAlbumProfile.findViewById(R.id.tvAlbumProfileValidation);
         etAlbumProfileName = (EditText) vAlbumProfile.findViewById(R.id.etAlbumProfileName);
         etAlbumProfileDesc = (EditText) vAlbumProfile.findViewById(R.id.etAlbumProfileDesc);
         btnAlbumProfileSave = (Button) vAlbumProfile.findViewById(R.id.btnAlbumProfileSave);
@@ -63,6 +75,8 @@ public class AlbumProfileFragment extends Fragment implements  View.OnClickListe
         btnAlbumProfileDelete.setOnClickListener(this);
         mContext = getContext();
         Bundle extras = getActivity().getIntent().getExtras();
+
+        registerBroadcast();
         if (extras != null) {
 
             album_name = extras.getString(DataAlbumAdapter.ITEM_ALBUM_NAME);
@@ -87,11 +101,11 @@ public class AlbumProfileFragment extends Fragment implements  View.OnClickListe
 
 
         }
-
+        tvAlbumProfileValidation.setVisibility(View.INVISIBLE);
 
         initSpinnerIndustry();
 
-
+        Utilities.hideKeyboardNow(getActivity().getWindow());
 
         return vAlbumProfile;
     }
@@ -157,10 +171,83 @@ public class AlbumProfileFragment extends Fragment implements  View.OnClickListe
              break;
 
             case R.id.btnAlbumProfileSave:
+                validateAlbum();
+
             break;
 
         }
 
 
     }
+
+    private void validateAlbum(){
+        getAlbumName = etAlbumProfileName.getText().toString().trim();
+        getDescription = etAlbumProfileDesc.getText().toString().trim();
+
+        getPrivacyType = defaultPrivacyType;
+
+        if (Utilities.checkIsNull(getAlbumName) == true || Utilities.checkIsNull(getDescription)==true) {
+            tvAlbumProfileValidation.setText("Please enter all fields");
+            tvAlbumProfileValidation.setVisibility(View.VISIBLE);
+        }else {
+            if (btnAlbumProfileSave.getText().equals("Create")) {
+                createAlbumNow(getAlbumName, getDescription, getPrivacyType);
+            } else if (btnAlbumProfileSave.getText().equals("Update")) {
+
+            }
+        }
+
+    }
+
+    private void createAlbumNow(String albumName, String desc,  String type) {
+        Log.i("UserProfile", "register now called");
+        APIManager.getCreateAlbum(mContext,
+                PreferencesConfig.getUserIDPreference(mContext),
+                albumName, desc, type,
+                PreferencesConfig.getCompanyIdPreference(mContext));
+
+    }
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //   Log.i(LogInTAG, "Broadcast: "+CandyLoopService.MY_SERVICE_PAYLOAD);
+
+            switch (CandyLoopService.MY_SERVICE_PAYLOAD) {
+                case ServiceHelper.PAYLOAD_CREATE_ALBUM:
+
+                    DataStatus duData1 = (DataStatus) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
+
+                    // Update Successful
+                    if (duData1.getStatus().equals("success")) {
+                        Utilities.displayToast(mContext, "Album successfully created");
+                        startActivity(new Intent(mContext, ManageAlbumActivity.class));
+                    } else {
+                        Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
+                    }
+
+
+                    break;
+            }
+        }
+    };
+
+    public void registerBroadcast(){
+        CandyLoopService.setMyServicePage(ServiceHelper.PAGE_MANAGE_PROJECT_ALBUM_PROFILE);
+        LocalBroadcastManager.getInstance(mContext)
+                .registerReceiver(mBroadcastReceiver,
+                        new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
+
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Do your Work
+                registerBroadcast();
+
+        } else {
+
+        }
+    }
+
 }

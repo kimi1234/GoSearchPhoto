@@ -31,6 +31,7 @@
                 android:textStyle="bold" />
 
             <View
+                android:id="@+id/topLine"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/groupAlbumTitle"
@@ -39,12 +40,24 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
                 android:background="#585858" />
+            <TextView
+                android:id="@+id/tvGroupProfileValidation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="left"
+                android:layout_below="@+id/topLine"
+                android:textColor="@color/red"
+                android:layout_marginLeft="40dp"
+                android:textSize="12sp"
+                android:fontFamily="sans-serif"
+                android:text="Validation"/>
 
             <EditText
                 android:id="@+id/etGroupProfileName"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/groupAlbumTitle"
+                android:layout_below="@+id/tvGroupProfileValidation"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="20dp"
@@ -56,7 +69,7 @@
                 android:inputType="text" />
 
             <Button
-                android:id="@+id/btnDeptProfileSave"
+                android:id="@+id/btnGrpProfileSave"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -70,7 +83,7 @@
 
                 android:text="Update"></Button>
             <Button
-                android:id="@+id/btnDeptProfileDelete"
+                android:id="@+id/btnGrpProfileDelete"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="false"

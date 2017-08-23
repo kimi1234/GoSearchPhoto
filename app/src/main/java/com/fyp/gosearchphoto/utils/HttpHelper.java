@@ -21,7 +21,7 @@ public class HttpHelper  {
             throws IOException {
 
         String address = requestPackage.getEndpoint();
-        Log.i("HttpHelper Address: ", address);
+        Log.i("HttpHelper Address: ", ""+address);
 
         String encodedParams = requestPackage.getEncodedParams();
 

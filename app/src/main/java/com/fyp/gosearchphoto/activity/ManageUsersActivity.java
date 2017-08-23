@@ -87,9 +87,6 @@ public class ManageUsersActivity extends AppCompatActivity implements View.OnCli
     }
 
 
-
-
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -147,9 +144,7 @@ public class ManageUsersActivity extends AppCompatActivity implements View.OnCli
                     }else{
                         Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
                     }
-
                     break;
-
             }
         }
 
@@ -163,14 +158,11 @@ public class ManageUsersActivity extends AppCompatActivity implements View.OnCli
 
     }
     public void performUserSearch(){
-
         getKeywordSearch = etMUserSearch.getText().toString().trim();
-
         if(Utilities.checkIsNull(getKeywordSearch)==true){
             getKeywordSearch ="all";
         }
         APIManager.getCompanyUsers(mContext, PreferencesConfig.getCompanyIdPreference(mContext), getKeywordSearch);
-
     }
     public void setUserDataAdapter(List<DataUser> du){
         adapter = new DataUserAdapter(mContext, du, null , null);

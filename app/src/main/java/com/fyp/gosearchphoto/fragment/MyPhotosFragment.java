@@ -1,10 +1,14 @@
 package com.fyp.gosearchphoto.fragment;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,10 +29,16 @@ import android.widget.Toast;
 
 import com.fyp.gosearchphoto.R;
 import com.fyp.gosearchphoto.database.MDataSource;
-import com.fyp.gosearchphoto.model.DataItem;
-import com.fyp.gosearchphoto.model.DataItemAdapter;
+import com.fyp.gosearchphoto.model.DataImage;
+import com.fyp.gosearchphoto.model.DataImageAdapter;
+import com.fyp.gosearchphoto.model.DataStatus;
+import com.fyp.gosearchphoto.services.CandyLoopService;
+import com.fyp.gosearchphoto.services.ServiceHelper;
+import com.fyp.gosearchphoto.utils.APIManager;
+import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.whalemare.sheetmenu.SheetMenu;
@@ -41,10 +51,14 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
     private FloatingActionButton fab;
 
     private MDataSource mDataSource;
-    private DataItemAdapter adapter;
+    private DataImageAdapter adapter;
     private String getKeywordSearch;
 
     private RecyclerView mRecyclerView;
+
+    private Context mContext;
+    private String PAGE_NAME, getSearchBy, getSortBy;
+
 
 
     // Advanced search
@@ -86,11 +100,15 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(etMySearch, InputMethodManager.SHOW_IMPLICIT);
 
-
+        mContext = getContext();
+        //registerBroadcast();
+        getSearchBy = "img_name";
+        getSortBy = "img_name";
         fab.setOnClickListener(this);
         ibMyPhotoFilter.setOnClickListener(this);
         etMySearch.setOnClickListener(this);
         registerForContextMenu(ibMyPhotoFilter);
+
 
         etMySearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -102,6 +120,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                     mDataSource.open();
 
                     performSearch();
+                    Utilities.hideFragKeyboardNow(getActivity());
 
                     return true;
                 }
@@ -110,14 +129,6 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        mDataSource = new MDataSource(getContext());
-        mDataSource.open();
-
-
-        List<DataItem> listFromDB1 = mDataSource.getAllItems(null);
-        // Customize Adapter
-        adapter = new DataItemAdapter(getContext(), listFromDB1);
-        Log.i("get count", "" + adapter.getItemCount());
 
         return myPhotoView;
     }
@@ -154,21 +165,42 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
 
 
     }
+
+
+    private void getMyPhotoImageNow() {
+        PAGE_NAME = "MyPhotoPage";
+        APIManager.getSearchMyPhotoAPI(mContext,
+                PreferencesConfig.getCompanyIdPreference(mContext),
+                PreferencesConfig.getUserIDPreference(mContext),
+                getSearchBy,
+                "all",
+                getSortBy);
+    }
+
+
     private void performSearch() {
-        Utilities.hideKeyboardNow(getActivity().getWindow());
 
-        mDataSource = new MDataSource(getContext());
-        mDataSource.open();
+        if(Utilities.checkIsNull(getKeywordSearch)==true){
+            getKeywordSearch ="all";
+        }
+        APIManager.getSearchMyPhotoAPI(mContext,
+                PreferencesConfig.getCompanyIdPreference(mContext),
+                PreferencesConfig.getUserIDPreference(mContext),
+                getSearchBy,
+                getKeywordSearch,
+                getSortBy);
 
-        List<DataItem> listFromDB2 = mDataSource.getImagesByKeyword(getKeywordSearch);
-        // Customize Adapter
-        adapter = new DataItemAdapter(getContext(), listFromDB2);
 
-        adapter.notifyDataSetChanged();
-        mRecyclerView.setAdapter(adapter);
-        Log.i("get count", "" + adapter.getItemCount());
+    }
 
-        //... perform search ...
+
+    public void setImageDataAdapter(List<DataImage> du){
+        if(du.size()>0) {
+            adapter = new DataImageAdapter(mContext, du);
+            Log.i("get count", "" + adapter.getItemCount());
+            adapter.notifyDataSetChanged();
+            mRecyclerView.setAdapter(adapter);
+        }
     }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -198,7 +230,17 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                         .setClick(new MenuItem.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
-                                Utilities.displayToast(getContext(), item.getTitle().toString());
+                                switch(item.getTitle().toString().trim()){
+                                    case "Name":
+                                        getSortBy = "img_name";
+                                        break;
+                                    case "Size":
+                                        getSortBy = "width";
+                                        break;
+                                    case "Last Upload Date":
+                                        getSortBy = "uploadDateTime";
+                                        break;
+                                }
                                 return false;
                             }
                         }).show();
@@ -212,7 +254,34 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                         .setClick(new MenuItem.OnMenuItemClickListener() {
                             @Override
                             public boolean onMenuItemClick(MenuItem item) {
-                                Utilities.displayToast(getContext(), item.getTitle().toString());
+                                switch(item.getTitle().toString().trim()){
+                                    case "Name":
+                                        getSearchBy = "img_name";
+                                        break;
+                                    case "Size":
+                                        getSearchBy = "img_width";
+                                        break;
+                                    case "Extension":
+                                        getSearchBy = "extension";
+
+                                        break;
+                                    case "Last Upload Date":
+                                        getSearchBy = "uploadDateTime";
+                                        break;
+                                    case "Album":
+                                        getSearchBy = "img_name";
+
+                                        break;
+                                    case "Description":
+                                        getSearchBy = "description";
+
+                                        break;
+                                    case "Tags":
+                                        getSearchBy = "img_name";
+
+                                        break;
+                                }
+
                                 return false;
                             }
                         }).show();
@@ -415,7 +484,102 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
 //        Utilities.selectSpinnerValue(staticSpinner, "Others");
     }
 */
+   private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+       @Override
+       public void onReceive(Context context, Intent intent) {
+           //   Log.i(LogInTAG, "Broadcast: "+CandyLoopService.MY_SERVICE_PAYLOAD);
 
+           switch (CandyLoopService.MY_SERVICE_PAYLOAD) {
+               case ServiceHelper.PAYLOAD_SEARCH_MY_PHOTO:
+
+                   DataImage du = (DataImage) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
+
+                   if(du.getStatus().equals("no data")){
+                       Utilities.displayToast(mContext, "No public photo found.");
+                       Log.i("Public","No public data found");
+
+                   }else if(du.getStatus().equals("success")){
+                       List<DataImage> listFromServer = du.getImageinfo();
+                       Log.i("to string ", listFromServer.toString());
+
+                       // filter list and add pagename list
+                       List<DataImage> dataItems = new ArrayList<>();
+
+                       for (int i = 0; i < listFromServer.size(); i++) {
+                           DataImage item = new DataImage();
+                           item.setImage_id(listFromServer.get(i).getImage_id());
+                           item.setImage_url(listFromServer.get(i).getImage_url());
+                           item.setTitle(listFromServer.get(i).getTitle());
+                           item.setSize(listFromServer.get(i).getSize());
+                           item.setDescription(listFromServer.get(i).getDescription());
+                           item.setAlbum(listFromServer.get(i).getDescription());
+                           item.setAlbum_id(listFromServer.get(i).getAlbum_id());
+                           item.setUploaded_by(listFromServer.get(i).getDescription());
+                           item.setUploadDateTime(listFromServer.get(i).getUploadDateTime());
+                           item.setTag(listFromServer.get(i).getTag());
+                           item.setPage_data_type(PAGE_NAME);
+
+                           //TODO: Should set if its a favourite or not
+                           dataItems.add(item);
+
+                       }
+
+
+                       setImageDataAdapter(dataItems);
+
+                   }else{
+                       Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
+                   }
+
+                   break;
+
+               case ServiceHelper.PAYLOAD_ADD_FAVOURITE:
+                   DataStatus duData1 = (DataStatus) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
+
+                   // Update Successful
+                   if (duData1.getStatus().equals("success")) {
+                       Utilities.displayToast(mContext, "Photo has been added to favourites");
+                   } else {
+                       Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
+                   }
+                   break;
+
+               case ServiceHelper.PAYLOAD_REMOVE_FAVOURITE:
+                   DataStatus duData2 = (DataStatus) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
+
+                   // Update Successful
+                   if (duData2.getStatus().equals("success")) {
+                       Utilities.displayToast(mContext, "Photo has been removed from favourites");
+                   } else {
+                       Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
+                   }
+                   break;
+
+           }
+       }
+
+   };
+
+    public void registerBroadcast(){
+        CandyLoopService.setMyServicePage(ServiceHelper.PAGE_MYPHOTO);
+        LocalBroadcastManager.getInstance(mContext)
+                .registerReceiver(mBroadcastReceiver,
+                        new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
+
+    }
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Do your Work
+                registerBroadcast();
+            getMyPhotoImageNow();
+
+
+        } else {
+
+        }
+    }
 
 
 }

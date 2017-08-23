@@ -14,6 +14,7 @@ public class DataStatus implements Parcelable {
     private int user_id;
     private String department_id;
 
+
     public DataStatus(String status, int user_id, String department_id) {
         this.status = status;
         this.user_id = user_id;

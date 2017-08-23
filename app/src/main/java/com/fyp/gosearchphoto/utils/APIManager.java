@@ -239,6 +239,181 @@ public class APIManager {
         }
     }
 
+    //  #9
+    public static void getAddFavourite(Context cont, int image_id, int user_id) {
+        String getAddFavouriteInit = rootStringUrl + "/doAddFavourite.php?image_id=" + image_id +
+                "&user_id=" + user_id;
+
+        Log.i("getAddFavouriteAPI", getAddFavouriteInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getAddFavouriteAPI = rootStringUrl + "/doAddFavourite.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_ADD_FAVOURITE);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_ADD_FAVOURITE);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getAddFavouriteAPI);
+
+            requestPackage.setParam("image_id", Integer.toString(image_id));
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getAddFavouriteAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    //  #10
+    public static void getRemoveFavourite(Context cont,int image_id, int user_id) {
+        String getRemoveFavouriteInit = rootStringUrl + "/doRemoveFavourite.php?image_id=" + image_id +
+                "&user_id=" + user_id;
+
+        Log.i("doRemoveFavourite", getRemoveFavouriteInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getRemoveFavouriteAPI = rootStringUrl + "/doRemoveFavourite.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_REMOVE_FAVOURITE);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_REMOVE_FAVOURITE);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getRemoveFavouriteAPI);
+            requestPackage.setParam("image_id", Integer.toString(image_id));
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getRemoveFavouriteAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    // #11.1
+    public static void getSearchPublicAPI(Context cont, int company_id, int user_id, String searchby, String keyword, String sortby) {
+        String searchPublicInit = rootStringUrl + "/doSearchPublic.php?companyid=" + company_id +
+                "&user_id=" + user_id +
+                "&searchby=" + searchby +
+                "&keyword=" + keyword +
+                "&sortby=" + sortby;
+
+        Log.i("searchPublicAPI", searchPublicInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String searchPublicAPI = rootStringUrl + "/doSearchPublic.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_PUBLIC);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_PUBLIC);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(searchPublicAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+            requestPackage.setParam("searchby", searchby);
+            requestPackage.setParam("keyword", keyword);
+            requestPackage.setParam("sortby", sortby);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(searchPublicAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+
+    }
+
+    // #11.2
+    public static void getAlbumInfo(Context cont, int album_id) {
+        String getAlbumInfoInit = rootStringUrl + "/getAlbumInfo.php?album_id=" + album_id;
+
+        Log.i("getAlbumInfoAPI", getAlbumInfoInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getAlbumInfoAPI = rootStringUrl + "/getAlbumInfo.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_ALBUM_INFO);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_ALBUM_INFO);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getAlbumInfoAPI);
+            requestPackage.setParam("album_id", Integer.toString(album_id));
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getAlbumInfoAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }    }
+
+    // #12
+    public static void getSearchMyPhotoAPI(Context cont, int company_id, int user_id, String searchby, String keyword, String sortby) {
+        String searchMyPhotoInit = rootStringUrl + "/doSearchMyPhoto.php?company_id=" + company_id +
+                "&user_id=" + user_id +
+                "&searchby=" + searchby +
+                "&keyword=" + keyword +
+                "&sortby=" + sortby;
+
+        Log.i("searchMyPhotoAPI", searchMyPhotoInit);
+
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String searchMyPhotoAPI = rootStringUrl + "/doSearchMyPhoto.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_MY_PHOTO);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_MY_PHOTO);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(searchMyPhotoAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+            requestPackage.setParam("userid", Integer.toString(user_id));
+            requestPackage.setParam("searchby", searchby);
+            requestPackage.setParam("keyword", keyword);
+            requestPackage.setParam("sortby", sortby);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(searchMyPhotoAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    // #13
+    public static void getSearchMyFavouriteAPI(Context cont, int company_id, int user_id, String searchby, String keyword, String sortby) {
+        String searchMyFaveInit = rootStringUrl + "/doSearchMyFavourites.php?company_id=" + company_id +
+                "&user_id=" + user_id +
+                "&searchby=" + searchby +
+                "&keyword=" + keyword +
+                "&sortby=" + sortby;
+
+        Log.i("searchMyFaveAPI", searchMyFaveInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String searchMyFaveAPI = rootStringUrl + "/doSearchMyFavourites.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_MY_FAVOURITES);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_MY_FAVOURITES);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(searchMyFaveAPI);
+            requestPackage.setParam("companyid", Integer.toString(company_id));
+            requestPackage.setParam("userid", Integer.toString(user_id));
+            requestPackage.setParam("searchby", searchby);
+            requestPackage.setParam("keyword", keyword);
+            requestPackage.setParam("sortby", sortby);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(searchMyFaveAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
     // #14.1 &14.2
     public static void getCompanyUsers(Context cont, int company_id, String keyword) {
         String getCompanyUsersInitial = rootStringUrl + "/getCompanyUsers.php?companyid=" + company_id +
@@ -432,8 +607,8 @@ public class APIManager {
 
         String getAlbumListByUserAPI = rootStringUrl + "/getAlbumListByUser.php";
         if (networkOk) {
-            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CREATE_DEPARTMENT);
-            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CREATE_DEPARTMENT);
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_USER);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_ALBUM_LIST_BY_USER);
             RequestPackage requestPackage = new RequestPackage();
             requestPackage.setEndPoint(getAlbumListByUserAPI);
             requestPackage.setParam("user_id", Integer.toString(user_id));
@@ -448,43 +623,232 @@ public class APIManager {
         }
     }
 
-    /*public static void getRegisterAPI(String user_type,String fullname, String email, String password, String company_name, String industry, String desc) {
-        String registerAPI =rootStringUrl+ "/register.php?user_type="+user_type+
-                "&fullname="+fullname+
-                "&email="+email+
-                "&password="+password+
-                "&companyname="+company_name+
-                "&industry="+industry+
-                "&desc="+desc;
 
-                Log.i("registerAPI",registerAPI);
+    //  #20
+    public static void getRemoveUserAlbum(Context cont, int album_id, int user_id) {
+        String getRemoveUserAlbumInit = rootStringUrl + "/doRemoveUserAlbum.php?album_id=" + album_id +
+                "&user_id=" + user_id;
+        Log.i("getRemoveUserAlbumAPI", getRemoveUserAlbumInit);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getRemoveUserAlbumAPI = rootStringUrl + "/doRemoveUserAlbum.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_REMOVE_USER_ALBUM);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_REMOVE_USER_ALBUM);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getRemoveUserAlbumAPI);
+            requestPackage.setParam("user_id", Integer.toString(user_id));
+            requestPackage.setParam("album_id", Integer.toString(album_id));
+
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getRemoveUserAlbumAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    //  #21
+    public static void getALbumListbyOwner(Context cont, int owner_id, String keyword) {
+        String getALbumListbyOwnerInit = rootStringUrl + "/getAlbumListByOwner.php?owner_id=" + owner_id +
+                "&keyword=" + keyword;
+
+        Log.i("getALbumListbyOwnerAPI", getALbumListbyOwnerInit);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getALbumListbyOwnerAPI = rootStringUrl + "/getAlbumListByOwner.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_OWNER);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_ALBUM_LIST_BY_OWNER);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getALbumListbyOwnerAPI);
+            requestPackage.setParam("owner_id", Integer.toString(owner_id));
+            requestPackage.setParam("keyword", keyword);
+
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getALbumListbyOwnerAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    // #24
+    public static void getGroupInfo(Context cont, int owner_id, int groupid) {
+        String getGroupInfoAPI = rootStringUrl + "/getGroupInfo.php?owner_id=" + owner_id +
+                "&groupid=" + groupid;
+
+        Log.i("getGroupInfoAPI", getGroupInfoAPI);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getALbumListbyOwnerAPI = rootStringUrl + "/getGroupInfo.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_GROUP_INFO);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_GROUP_INFO);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getALbumListbyOwnerAPI);
+            requestPackage.setParam("owner_id", Integer.toString(owner_id));
+            requestPackage.setParam("groupid", Integer.toString(groupid));
+
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getALbumListbyOwnerAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }    }
+
+    // #25
+    public static void getUpdateGroup(Context cont, int ownerid, int groupid, String groupname) {
+        String getUpdateGroupInit = rootStringUrl + "/doUpdateGroup.php?ownerid=" + ownerid +
+                "&groupid=" + groupid +
+                "&groupname=" + groupname;
+
+        Log.i("getUpdateGroupAPI", getUpdateGroupInit);
+
+
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getUpdateGroupAPI = rootStringUrl + "/doUpdateGroup.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_UPDATE_GROUP);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_UPDATE_GROUP);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getUpdateGroupAPI);
+            requestPackage.setParam("ownerid", Integer.toString(ownerid));
+            requestPackage.setParam("groupid", Integer.toString(groupid));
+            requestPackage.setParam("groupname", groupname);
+
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getUpdateGroupAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
+    }
+
+    // #23.1 & 23.2
+    public static void getGroupByUser(Context cont, int userid, String keyword) {
+        String getGroupByUserInit = rootStringUrl + "/getGroupByUser.php?userid=" + userid +
+                "&keyword=" + keyword;
+
+        Log.i("getGroupByUserAPI", getGroupByUserInit);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getGroupByUserAPI = rootStringUrl + "/getGroupByUser.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_GET_GROUP_BY_USER);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_GET_GROUP_BY_USER);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getGroupByUserAPI);
+            requestPackage.setParam("userid", Integer.toString(userid));
+            requestPackage.setParam("keyword", keyword);
+
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getGroupByUserAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
 
     }
 
-  public static String getLogInAPI(String username,  String password) {
-        String logInAPI =rootStringUrl+ "/login.php?username="+username+"&password="+password;
-        Log.i("logInAPI",logInAPI);
-        return logInAPI;
+
+    // #27
+    public static void getCreateGroup(Context cont, String groupname, int owner_id){
+        String getDeleteGroupUserInit = rootStringUrl + "/doCreateGroup.php?groupname=" + groupname +
+                "&owner_id=" + owner_id;
+
+        Log.i("getDeleteGroupUserAPI", getDeleteGroupUserInit);
+
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getDeleteGroupUserAPI = rootStringUrl + "/doCreateGroup.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CREATE_GROUP);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CREATE_GROUP);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getDeleteGroupUserAPI);
+            requestPackage.setParam("owner_id", Integer.toString(owner_id));
+            requestPackage.setParam("groupname", groupname);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getDeleteGroupUserAPI));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
     }
 
+    // #28 This should users to groups
+    public static void getShareGroupToUser(Context cont, String strjson) {
+        String getShareGroupToUserInit = rootStringUrl + "/doShareGroupToUser.php?json=" + strjson;
 
-    public static String getUpdateProfileAPI(String username, String email, int userid) {
-        String updateProfileAPI =rootStringUrl+ "/updateprofile.php?fullname="+username+"&email="+email+"&user_id="+userid;
-        Log.i("updateProfileAPI",updateProfileAPI);
-        return updateProfileAPI;
+
+        Log.i("getShareGroupToUser", getShareGroupToUserInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getShareGroupToUser = rootStringUrl + "/doShareGroupToUser.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SHARE_GROUP_TO_USER);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SHARE_GROUP_TO_USER);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getShareGroupToUser);
+            requestPackage.setParam("json", strjson);
+
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getShareGroupToUser));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }
     }
 
+    // #41
+    public static void getCreateAlbum(Context cont, int userid, String albumName, String desc, String type, int company_id) {
+        String getCreateAlbumInit = rootStringUrl + "/doCreateAlbum.php?userid=" + userid +
+                "&albumName=" + albumName +
+                "&desc=" + desc +
+                "&type=" + type;
 
-    public static String getUpdateCProfileAPI(int company_id, String company_name, String industry, String desc) {
-        String updateProfileAPI =rootStringUrl+ "/updatecprofile.php?companyid="+company_id+"&companyname="+company_name+"&industry="+industry+"&desc="+desc;
-        Log.i("updateCProfileAPI",updateProfileAPI);
-        return updateProfileAPI;
-    }
-   public static String getChangePasswordAPI(int userid, String newpassword) {
-        String changePassAPI =rootStringUrl+ "/changepassword.php?user_id="+userid+"&newpassword="+newpassword;
-        Log.i("changePassAPI",changePassAPI);
-        return changePassAPI;
+        Log.i("getCreateAlbumInit", getCreateAlbumInit);
+        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+
+        String getCreateAlbum = rootStringUrl + "/doCreateAlbum.php";
+        if (networkOk) {
+            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_CREATE_ALBUM);
+            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_CREATE_ALBUM);
+            RequestPackage requestPackage = new RequestPackage();
+            requestPackage.setEndPoint(getCreateAlbum);
+            requestPackage.setParam("userid", Integer.toString(userid));
+            requestPackage.setParam("company_id", Integer.toString(company_id));
+            requestPackage.setParam("albumName", albumName);
+            requestPackage.setParam("desc", desc);
+            requestPackage.setParam("type", type);
 
 
-    }*/
+            Intent intent = new Intent(cont, CandyLoopService.class);
+            intent.setData(Uri.parse(getCreateAlbum));
+            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+            cont.startService(intent);
+        } else {
+            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+        }    }
+
+
 }

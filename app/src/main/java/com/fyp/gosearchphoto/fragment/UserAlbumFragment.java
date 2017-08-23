@@ -140,10 +140,7 @@ public class UserAlbumFragment extends Fragment implements View.OnClickListener 
                 displayUserAlbum();
             }
         } else {
-            // Do your Work
-            LocalBroadcastManager.getInstance(mContext)
-                    .unregisterReceiver(mBroadcastReceiver);
-        }
+                    }
     }
 
     public void showAddAlbum(Context context) {

@@ -100,8 +100,8 @@ public class ServiceHelper {
     public static final String REQUEST_GET_ALBUM_INFO = "request_get_album_info";
 
     //#12
-    public static final String PAYLOAD_SEARCH_MY_INFO = "payload_search_my_info";
-    public static final String REQUEST_SEARCH_MY_INFO = "request_search_my_info";
+    public static final String PAYLOAD_SEARCH_MY_PHOTO = "payload_search_my_photo";
+    public static final String REQUEST_SEARCH_MY_PHOTO = "request_search_my_photo";
 
     //#13
     public static final String PAYLOAD_SEARCH_MY_FAVOURITES = "payload_search_my_favourites";

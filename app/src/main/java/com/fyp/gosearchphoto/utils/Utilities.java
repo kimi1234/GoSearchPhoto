@@ -57,6 +57,15 @@ public class Utilities {
                 Toast.LENGTH_LONG).show();
     }
 
+    public static void hideFragKeyboardNow(Activity getAct){
+        InputMethodManager imm = (InputMethodManager) getAct.getSystemService(Context.
+                INPUT_METHOD_SERVICE);
+        if (getAct.getCurrentFocus() != null) {
+            imm.hideSoftInputFromWindow(getAct.getCurrentFocus().getWindowToken(), 0);
+        }
+
+    }
+
     public static boolean checkIsNull(String textview) {
         String checkString = textview.trim();
 

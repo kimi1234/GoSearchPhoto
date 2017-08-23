@@ -157,12 +157,9 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
             // Do your Work
             if (user_id != 0) {
                 registerBroadcast();
-                getDepartmentListNow();
             }
         } else {
-            // Do your Work
-            LocalBroadcastManager.getInstance(mContext)
-                    .unregisterReceiver(mBroadcastReceiver);
+
         }
     }
     @Override

@@ -8,6 +8,8 @@ import android.util.Log;
 import com.fyp.gosearchphoto.model.DataAlbum;
 import com.fyp.gosearchphoto.model.DataCompany;
 import com.fyp.gosearchphoto.model.DataDepartment;
+import com.fyp.gosearchphoto.model.DataGroup;
+import com.fyp.gosearchphoto.model.DataImage;
 import com.fyp.gosearchphoto.model.DataStatus;
 import com.fyp.gosearchphoto.model.DataUser;
 import com.fyp.gosearchphoto.utils.HttpHelper;
@@ -407,6 +409,287 @@ public class CandyLoopService extends IntentService {
                     Log.i("Response", response);
                     messageIntent = new Intent(MY_SERVICE_PAGE);
                     messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MANAGE_PROJECT_ALBUM)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_OWNER:
+                    gson = new Gson();
+                    DataAlbum daItems = gson.fromJson(response, DataAlbum.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MANAGE_PROJECT_ALBUM_PROFILE)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_CREATE_ALBUM:
+                    gson = new Gson();
+                    DataStatus daItems = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MANAGE_GROUPS)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_GET_GROUP_BY_USER:
+                    gson = new Gson();
+                    DataGroup daItems = gson.fromJson(response, DataGroup.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MANAGE_GROUPS_PROFILE)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_CREATE_GROUP:
+                    gson = new Gson();
+                    DataStatus daItems = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+
+                case ServiceHelper.REQUEST_UPDATE_GROUP:
+                    gson = new Gson();
+                    DataStatus daItems1 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems1);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_GET_GROUP_INFO:
+                    gson = new Gson();
+                    DataGroup dgItems1 = gson.fromJson(response, DataGroup.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, dgItems1);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_GET_COMPANY_USERS:
+                    gson = new Gson();
+                    DataUser duItems = gson.fromJson(response, DataUser.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, duItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_SHARE_GROUP_TO_USER:
+                    gson = new Gson();
+                    DataStatus daItems2 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems2);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_PUBLIC)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_SEARCH_PUBLIC:
+                    gson = new Gson();
+                    DataImage daItems = gson.fromJson(response, DataImage.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_ADD_FAVOURITE:
+                    gson = new Gson();
+                    DataStatus daItems1 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems1);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_REMOVE_FAVOURITE:
+                    gson = new Gson();
+                    DataStatus daItems2 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems2);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MYPHOTO)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_SEARCH_MY_PHOTO:
+                    gson = new Gson();
+                    DataImage daItems = gson.fromJson(response, DataImage.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_ADD_FAVOURITE:
+                    gson = new Gson();
+                    DataStatus daItems1 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems1);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_REMOVE_FAVOURITE:
+                    gson = new Gson();
+                    DataStatus daItems2 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems2);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+            }
+        }
+        if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_FAVOURITES)) {
+
+            requestPackage =
+                    (RequestPackage) intent.getParcelableExtra(REQUEST_PACKAGE);
+
+            String response;
+            try {
+                response = HttpHelper.downloadFromFeed(requestPackage);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            switch (REQUEST_PACKAGE) {
+
+
+                case ServiceHelper.REQUEST_SEARCH_MY_FAVOURITES:
+                    gson = new Gson();
+                    DataImage daItems = gson.fromJson(response, DataImage.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_ADD_FAVOURITE:
+                    gson = new Gson();
+                    DataStatus daItems1 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems1);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_REMOVE_FAVOURITE:
+                    gson = new Gson();
+                    DataStatus daItems2 = gson.fromJson(response, DataStatus.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems2);
                     manager = LocalBroadcastManager.getInstance(getApplicationContext());
                     manager.sendBroadcast(messageIntent);
                     break;

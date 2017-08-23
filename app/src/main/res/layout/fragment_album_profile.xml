@@ -21,6 +21,18 @@
             android:text="Project Album Information"
             android:textColor="@color/text_really_black"
             android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tvAlbumProfileValidation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="left"
+            android:layout_below="@+id/albumProfileTitle"
+            android:textColor="@color/red"
+            android:layout_marginLeft="40dp"
+            android:textSize="12sp"
+            android:fontFamily="sans-serif"
+            android:text="Validation"/>
         <EditText
             android:id="@+id/etAlbumProfileName"
             android:layout_width="match_parent"
@@ -32,7 +44,7 @@
             android:foregroundTint="@color/textColor"
             android:backgroundTint="@color/textColor"
             android:layout_marginTop="20dp"
-            android:layout_below="@+id/albumProfileTitle"
+            android:layout_below="@+id/tvAlbumProfileValidation"
             android:imeOptions="actionDone"
             android:inputType="text"
             />

@@ -1,10 +1,9 @@
 package com.fyp.gosearchphoto.model;
 
-import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.fyp.gosearchphoto.database.ItemTable;
+import java.util.List;
 
 /**
  * Created by anamay on 7/27/17.
@@ -18,26 +17,58 @@ public class DataGroup implements Parcelable {
     private String group_name;
     private String page_data_type;
 
+    private String status;
+    private List<DataGroup> groupList;
+    private List<DataGroup> groupUserList;
+
+    //duplicate
+    private String groupName;
+    private int user_id;
+    private String userName;
+
+
+
+
+
     public DataGroup() {
     }
 
-    public DataGroup(int group_id, int owner_id, String owner_name, String group_name, String page_data_type) {
+    public DataGroup(int group_id, int owner_id, String owner_name, String group_name, String page_data_type, String status, List<DataGroup> groupList, List<DataGroup> groupUserList, String groupName, int user_id, String userName) {
         this.group_id = group_id;
         this.owner_id = owner_id;
         this.owner_name = owner_name;
         this.group_name = group_name;
         this.page_data_type = page_data_type;
+        this.status = status;
+        this.groupList = groupList;
+        this.groupUserList = groupUserList;
+        this.groupName = groupName;
+        this.user_id = user_id;
+        this.userName = userName;
     }
 
-    @Override
-    public String toString() {
-        return "DataGroup{" +
-                "group_id=" + group_id +
-                ", owner_id=" + owner_id +
-                ", owner_name='" + owner_name + '\'' +
-                ", group_name='" + group_name + '\'' +
-                ", page_data_type='" + page_data_type + '\'' +
-                '}';
+    public List<DataGroup> getGroupUserList() {
+        return groupUserList;
+    }
+
+    public void setGroupUserList(List<DataGroup> groupUserList) {
+        this.groupUserList = groupUserList;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public int getGroup_id() {
@@ -80,23 +111,66 @@ public class DataGroup implements Parcelable {
         this.page_data_type = page_data_type;
     }
 
-    public ContentValues toValues() {
-        // I have seven columns
-        // Add each of the field's values to the values object.
-        // The key should be the name of the column in the database.
-        // And I'm going to use my constants from the table class for that.
-        ContentValues values = new ContentValues(7);
 
-        values.put(ItemTable.COLUMN_GRP_OWNER_ID, group_id);
-        values.put(ItemTable.COLUMN_GRP_NAME, group_name);
-        values.put(ItemTable.COLUMN_GRP_OWNER_ID, owner_id);
-        values.put(ItemTable.COLUMN_GRP_OWNER_NAME, owner_name);
-        return values;
+    public String getStatus() {
+        return status;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public List<DataGroup> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<DataGroup> groupList) {
+        this.groupList = groupList;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    /*   public ContentValues toValues() {
+            // I have seven columns
+            // Add each of the field's values to the values object.
+            // The key should be the name of the column in the database.
+            // And I'm going to use my constants from the table class for that.
+            ContentValues values = new ContentValues(7);
+
+            values.put(ItemTable.COLUMN_GRP_OWNER_ID, group_id);
+            values.put(ItemTable.COLUMN_GRP_NAME, group_name);
+            values.put(ItemTable.COLUMN_GRP_OWNER_ID, owner_id);
+            values.put(ItemTable.COLUMN_GRP_OWNER_NAME, owner_name);
+            return values;
+        }
+    */
     /* by making this a parcelable object we can now pass objects
         that are instances of this class, data item, between activities as intent extras.
     * */
+
+    @Override
+    public String toString() {
+        return "DataGroup{" +
+                "group_id=" + group_id +
+                ", owner_id=" + owner_id +
+                ", owner_name='" + owner_name + '\'' +
+                ", group_name='" + group_name + '\'' +
+                ", page_data_type='" + page_data_type + '\'' +
+                ", status='" + status + '\'' +
+                ", groupList=" + groupList +
+                ", groupUserList=" + groupUserList +
+                ", groupName='" + groupName + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -109,6 +183,12 @@ public class DataGroup implements Parcelable {
         dest.writeInt(this.owner_id);
         dest.writeString(this.owner_name);
         dest.writeString(this.page_data_type);
+        dest.writeString(this.status);
+        dest.writeString(this.groupName);
+        dest.writeList(this.groupList);
+        dest.writeList(this.groupUserList);
+        dest.writeString(this.userName);
+        dest.writeInt(this.user_id);
 
     }
 
@@ -118,6 +198,13 @@ public class DataGroup implements Parcelable {
         this.owner_id = in.readInt();
         this.owner_name = in.readString();
         this.page_data_type= in.readString();
+        this.groupName= in.readString();
+        this.status= in.readString();
+        this.groupList  = in.readArrayList((ClassLoader) CREATOR);
+        this.groupUserList  = in.readArrayList((ClassLoader) CREATOR);
+        this.user_id = in.readInt();
+        this.userName = in.readString();
+
     }
 
     public static final Parcelable.Creator<com.fyp.gosearchphoto.model.DataGroup> CREATOR = new Parcelable.Creator<com.fyp.gosearchphoto.model.DataGroup>() {

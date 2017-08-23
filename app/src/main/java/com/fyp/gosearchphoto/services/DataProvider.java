@@ -104,6 +104,7 @@ public class DataProvider {
                 "Our unique blend of pomegranate juice, black Rubio, and mint tea creates this light fusion of flavors.  ",
                 2, 4, "iced_tea.jpg"));
 
+
         addItem(new DataItem(null, "Café Latte", "Drinks",
                 "Our house blend of espresso and foamed milk. Can be served with flavored syrups and over ice.  Non-dairy substitutions available upon request.",
                 3, 6, "cafe_latte.jpg"));

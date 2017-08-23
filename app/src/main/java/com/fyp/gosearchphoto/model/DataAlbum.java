@@ -45,6 +45,7 @@ public class DataAlbum implements Parcelable {
     public DataAlbum() {
     }
 
+
     public String getStatus() {
         return status;
     }
@@ -132,6 +133,8 @@ public class DataAlbum implements Parcelable {
     public void setPage_data_type(String page_data_type) {
         this.page_data_type = page_data_type;
     }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -160,12 +163,11 @@ public class DataAlbum implements Parcelable {
     protected DataAlbum(Parcel in) {
         this.albumId = in.readInt();;
         this.owner_id = in.readInt();
-        this.album_name = in.readString();;
-        this.owner_name = in.readString();;
-        this.privacy_type = in.readString();;
-        this.description = in.readString();;
-        this.page_data_type = in.readString();;
-
+        this.album_name = in.readString();
+        this.owner_name = in.readString();
+        this.privacy_type = in.readString();
+        this.description = in.readString();
+        this.page_data_type = in.readString();
 
         this.status = in.readString();;
         this.name = in.readString();;
