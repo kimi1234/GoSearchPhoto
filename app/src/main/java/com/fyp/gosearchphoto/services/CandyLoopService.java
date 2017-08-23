@@ -41,7 +41,7 @@ public class CandyLoopService extends IntentService {
         RequestPackage requestPackage;
 
         Log.i("CLService SERVICE", MY_SERVICE_PAGE);
-        Log.i("CLService REQUEST", ServiceHelper.REQUEST_CHECKUSER_EXIST);
+        Log.i("CLService REQUEST", REQUEST_PACKAGE);
         if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_REGISTER_ADMIN)) {
 
             requestPackage =

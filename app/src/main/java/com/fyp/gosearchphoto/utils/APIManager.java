@@ -350,6 +350,7 @@ public class APIManager {
 
     // #12
     public static void getSearchMyPhotoAPI(Context cont, int company_id, int user_id, String searchby, String keyword, String sortby) {
+
         String searchMyPhotoInit = rootStringUrl + "/doSearchMyPhoto.php?company_id=" + company_id +
                 "&user_id=" + user_id +
                 "&searchby=" + searchby +

@@ -58,6 +58,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private String PAGE_NAME, getSearchBy, getSortBy;
+    private int getCompanyID, getUserID;
 
 
 
@@ -82,6 +83,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        Log.i("MY PHOTOS"," oncreate called");
 
 
     }
@@ -100,10 +102,11 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(etMySearch, InputMethodManager.SHOW_IMPLICIT);
 
-        mContext = getContext();
         //registerBroadcast();
         getSearchBy = "img_name";
         getSortBy = "img_name";
+
+
         fab.setOnClickListener(this);
         ibMyPhotoFilter.setOnClickListener(this);
         etMySearch.setOnClickListener(this);
@@ -115,9 +118,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     getKeywordSearch = etMySearch.getText().toString().trim();
-//                    performSearch();
-                    mDataSource = new MDataSource(getContext());
-                    mDataSource.open();
+
 
                     performSearch();
                     Utilities.hideFragKeyboardNow(getActivity());
@@ -129,6 +130,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+        Log.i("MY PHOTOS","getPublicImageNow IN oncreatView called");
 
         return myPhotoView;
     }
@@ -139,11 +141,18 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mContext = getContext();
+        //registerBroadcast();
+        getSearchBy = "img_name";
+        getSortBy = "img_name";
+        getCompanyID = PreferencesConfig.getCompanyIdPreference(mContext);
+        getUserID = PreferencesConfig.getUserIDPreference(mContext);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvMyPhotoItems);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
         mRecyclerView.setAdapter(adapter);
+        Log.i("PUBLIC", "onViewCRREATED");
+
     }
 
     @Override
@@ -167,11 +176,11 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    private void getMyPhotoImageNow() {
+    public void getMyPhotoImageNow() {
         PAGE_NAME = "MyPhotoPage";
         APIManager.getSearchMyPhotoAPI(mContext,
-                PreferencesConfig.getCompanyIdPreference(mContext),
-                PreferencesConfig.getUserIDPreference(mContext),
+                getCompanyID,
+                getUserID,
                 getSearchBy,
                 "all",
                 getSortBy);
@@ -562,7 +571,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
 
     public void registerBroadcast(){
         CandyLoopService.setMyServicePage(ServiceHelper.PAGE_MYPHOTO);
-        LocalBroadcastManager.getInstance(mContext)
+        LocalBroadcastManager.getInstance(getContext())
                 .registerReceiver(mBroadcastReceiver,
                         new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
 
@@ -572,11 +581,16 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             // Do your Work
+            mContext = getContext();
                 registerBroadcast();
-            getMyPhotoImageNow();
+                //getMyPhotoImageNow();
+            Log.i("MYPHOTO"," : isVisibleToUser called");
 
 
         } else {
+            LocalBroadcastManager.getInstance(getContext())
+                    .unregisterReceiver(mBroadcastReceiver);
+
 
         }
     }
