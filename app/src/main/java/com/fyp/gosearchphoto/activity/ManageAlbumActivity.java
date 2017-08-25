@@ -170,4 +170,14 @@ public class ManageAlbumActivity extends AppCompatActivity implements View.OnCli
 
     };
 
+    //
+    //   IMAGE UPLOAD START
+    //
+
+
+
+
+
+
+
 }

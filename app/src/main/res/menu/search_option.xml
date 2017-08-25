@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_album"
-        android:title="Show All shared albums" />
+
     <item
         android:id="@+id/menu_sort"
         android:title="Sort by.." />
     <item
         android:id="@+id/menu_filter"
         android:title="Search by.." />
-    <item
-        android:id="@+id/menu_adv_search"
-        android:title="Advanced Search" />
+
 
 </menu>

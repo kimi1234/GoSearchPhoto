@@ -2,6 +2,11 @@ package com.fyp.gosearchphoto.model;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,15 +16,21 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fyp.gosearchphoto.R;
 import com.fyp.gosearchphoto.utils.APIManager;
 import com.fyp.gosearchphoto.utils.PreferencesConfig;
 import com.fyp.gosearchphoto.utils.Utilities;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by anamay on 8/23/17.
@@ -29,7 +40,6 @@ public class DataImageAdapter extends RecyclerView.Adapter<DataImageAdapter.View
 
     public static final String ITEM_ID_KEY = "item_id_key";
     public static final String ITEM_KEY = "item_key";
-
     private List<DataImage> mItems;
     private Context mContext;
 
@@ -70,13 +80,19 @@ public class DataImageAdapter extends RecyclerView.Adapter<DataImageAdapter.View
     * Supplies the data that you want to display to the user and set up event handlers
     * */
     @Override
-    public void onBindViewHolder(final DataImageAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final DataImageAdapter.ViewHolder holder, final int position) {
         final DataImage item = mItems.get(position);
+        Log.i("DATAIMAGEADAPTER", "pagedata type: "+item.toString());
 
             holder.tvName.setText(item.getTitle());
             String imageFile = item.getImage_url();
 
             Picasso.with(mContext).load(imageFile).into(holder.imageView);
+        Log.i("DATAIMAGEADAPTER", "pagedata type: "+item.getPage_data_type().toString());
+            if(item.getPage_data_type().toString().equals("FavouritePage")){
+                holder.iBFave.setTag(R.drawable.rate_star_pink);
+                holder.iBFave.setImageResource(R.drawable.rate_star_pink);
+            }
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +120,7 @@ public class DataImageAdapter extends RecyclerView.Adapter<DataImageAdapter.View
             public void onClick(View v) {
                 Log.i("Favourite clicked", holder.iBFave.getDrawable().toString());
                 //startActivity(new Intent(MainActivity.this, LogInActivity.class));
+                int getPos = position;
 
                 Object tag = holder.iBFave.getTag();
                 int backgroundId = R.drawable.rate_star_pink;
@@ -113,6 +130,10 @@ public class DataImageAdapter extends RecyclerView.Adapter<DataImageAdapter.View
                             item.getImage_id(),
                             PreferencesConfig.getUserIDPreference(mContext)
                             );
+
+                    mItems.remove(getPos);
+                    notifyItemRemoved(getPos);
+                    notifyItemRangeChanged(position,mItems.size());
                 }else{
                     APIManager.getAddFavourite(mContext,
                             item.getImage_id(),
@@ -122,20 +143,21 @@ public class DataImageAdapter extends RecyclerView.Adapter<DataImageAdapter.View
                 holder.iBFave.setTag(backgroundId);
                 holder.iBFave.setImageResource(backgroundId);
 
-                Utilities.displayToast(mContext,"Favourites Selected");
+            //    Utilities.displayToast(mContext,"Favourites Selected");
             }
         });
 
+        holder.iBDownload.setOnClickListener(new View.OnClickListener() {
 
-
-        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(mContext, "You long clicked " + item.getTitle(),
-                        Toast.LENGTH_SHORT).show();
-                return false;
+            public void onClick(View v) {
+                imageDownload(mContext, item.getImage_url());
+                Utilities.displayToast(mContext, "Photo "+item.getTitle()+" is downloading");
             }
         });
+
+
+
     }
 
     @Override
@@ -254,4 +276,82 @@ public class DataImageAdapter extends RecyclerView.Adapter<DataImageAdapter.View
 
     }
 
+
+
+   //save image
+    public static void imageDownload(Context ctx, String url){
+        Picasso.with(ctx)
+                .load(url)
+                .into(getTarget(url, ctx));
+    }
+
+    //target to save
+    private static Target getTarget(final String url,final Context ctx){
+        Target target = new Target(){
+
+            @Override
+            public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                new Thread(new Runnable() {
+
+                    @Override
+                    public void run() {
+
+                       // File file = new File(Environment.getDataDirectory().getPath() + "/" + url);
+                        File file = getOutputMediaFile();
+                        try {
+                            file.createNewFile();
+                            FileOutputStream ostream = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream);
+                            ostream.flush();
+                            ostream.close();
+                            ctx.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+                        } catch (IOException e) {
+                            Log.e("IOException", e.getLocalizedMessage());
+                        }
+                    }
+                }).start();
+
+            }
+
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+        return target;
+    }
+
+    private static File getOutputMediaFile() {
+        String IMAGE_DIRECTORY_NAME = "Candyloop";
+
+        // External sdcard location
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
+                        + IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                + "IMG_" + timeStamp + ".jpg");
+
+
+        return mediaFile;
+    }
 }

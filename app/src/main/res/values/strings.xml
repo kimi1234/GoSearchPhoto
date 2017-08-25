@@ -1,0 +1,87 @@
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">CandyLoop</string>
+    <string name="lorem_ipsum"><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris et magna ut erat elementum cursus in quis ipsum. Nam faucibus ultrices eros, vel tempor leo semper sit amet. Duis magna quam, congue vitae interdum nec, condimentum ut lectus. Sed commodo venenatis eros a dignissim. Nunc adipiscing turpis nec magna venenatis at ultricies ipsum bibendum. Sed volutpat urna quis nisi vulputate egestas. Etiam eu dui a enim lacinia dapibus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n\nPhasellus orci mi, eleifend nec congue id, volutpat at neque. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Integer semper velit vel leo rutrum sed fermentum elit porta.]]></string>
+    <string name="title_template_step">Step <xliff:g id="step_number">%1$d</xliff:g>: Lorem
+        Ipsum</string>
+    <string name="action_previous">Previous</string>
+    <string name="action_next">Next</string>
+    <string name="action_finish">Finish</string>
+    <string name="title_activity_tab">CandyLoop</string>
+    <string name="action_settings">Settings</string>
+    <string name="album_name">CandyLoop</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="file_paths">"Android/data/com.fyp.gosearchphoto/files/Pictures</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="create_account"><u>CREATE AN ACCOUNT</u></string>
+
+    <string name="title_activity_profile">Profile</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_test">test</string>
+
+    <string name="title_activity_company_profile">Company Profile</string>
+    <string name="title_activity_manage_department">Manage Department</string>
+    <string name="title_activity_manage_group">Manage Group</string>
+    <string name="title_activity_manage_users">Manage User</string>
+    <string name="title_activity_manage_album">Manage Album</string>
+
+
+    <string name="title_tab_profile">Profile</string>
+    <string name="title_tab_users">Users</string>
+    <string name="title_tab_album">Album</string>
+    <string name="title_tab_whocanview">Who can view</string>
+
+
+    <string name="title_searchby">Search by..</string>
+    <string name="title_sortby">Sort by..</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string-array name="industry_array">
+        <item>Accounting</item>
+        <item>Arts/Media</item>
+        <item>Admin/Human Resource</item>
+        <item>Building/Construction</item>
+        <item>Computer/Information Technology</item>
+        <item>Education</item>
+        <item>Engineering</item>
+        <item>Healthcare</item>
+        <item>Hotel/Restaurant</item>
+        <item>Manufacturing</item>
+        <item>Publishing</item>
+        <item>Sales/Marketing</item>
+        <item>Services</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="privacy_type_array">
+        <item>Private</item>
+        <item>Public</item>
+        <item>Custom</item>
+    </string-array>
+
+    <string-array name="photo_type_array">
+        <item>All</item>
+        <item>.png</item>
+        <item>.gif</item>
+        <item>.jpeg</item>
+    </string-array>
+    \
+    <string-array name="who_can_view_array">
+        <item>Users</item>
+        <item>Groups</item>
+        <item>Department</item>
+    </string-array>
+    <string name="title_activity_tab_mdepartment">Manage Department</string>
+    <string name="title_activity_tab_malbum">TabMAlbumActivity</string>
+    <string name="title_activity_tab_mgroup">TabMGroupActivity</string>
+
+
+</resources>
+

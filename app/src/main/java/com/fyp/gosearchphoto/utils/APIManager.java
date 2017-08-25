@@ -14,6 +14,8 @@ import com.fyp.gosearchphoto.services.ServiceHelper;
 
 public class APIManager {
     final static String rootStringUrl = "http://www.candy-loop.com/api";
+    public static final String UPLOAD_URL = "http://www.candy-loop.com/insert_images.php";
+   // public static final String UPLOAD_URL = "http://www.candy-loop.com/uploadImage.php";
 
     //  #1
     public static void checkUserExist(Context cont, String email) {
@@ -301,26 +303,30 @@ public class APIManager {
                 "&sortby=" + sortby;
 
         Log.i("searchPublicAPI", searchPublicInit);
-        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+        if(user_id==0){
+            Log.i("API MANAGER", "getSearchPublicAPI is called but USER ID = "+user_id);
+        }else {
+            boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
 
-        String searchPublicAPI = rootStringUrl + "/doSearchPublic.php";
-        if (networkOk) {
-            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_PUBLIC);
-            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_PUBLIC);
-            RequestPackage requestPackage = new RequestPackage();
-            requestPackage.setEndPoint(searchPublicAPI);
-            requestPackage.setParam("companyid", Integer.toString(company_id));
-            requestPackage.setParam("user_id", Integer.toString(user_id));
-            requestPackage.setParam("searchby", searchby);
-            requestPackage.setParam("keyword", keyword);
-            requestPackage.setParam("sortby", sortby);
+            String searchPublicAPI = rootStringUrl + "/doSearchPublic.php";
+            if (networkOk) {
+                CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_PUBLIC);
+                CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_PUBLIC);
+                RequestPackage requestPackage = new RequestPackage();
+                requestPackage.setEndPoint(searchPublicAPI);
+                requestPackage.setParam("companyid", Integer.toString(company_id));
+                requestPackage.setParam("user_id", Integer.toString(user_id));
+                requestPackage.setParam("searchby", searchby);
+                requestPackage.setParam("keyword", keyword);
+                requestPackage.setParam("sortby", sortby);
 
-            Intent intent = new Intent(cont, CandyLoopService.class);
-            intent.setData(Uri.parse(searchPublicAPI));
-            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
-            cont.startService(intent);
-        } else {
-            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+                Intent intent = new Intent(cont, CandyLoopService.class);
+                intent.setData(Uri.parse(searchPublicAPI));
+                intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+                cont.startService(intent);
+            } else {
+                Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+            }
         }
 
     }
@@ -359,27 +365,30 @@ public class APIManager {
 
         Log.i("searchMyPhotoAPI", searchMyPhotoInit);
 
+        if(user_id==0){
+            Log.i("API MANAGER", "getSearchMyPhotoAPI is called but USER ID = "+user_id);
+        }else {
+            boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
 
-        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+            String searchMyPhotoAPI = rootStringUrl + "/doSearchMyPhoto.php";
+            if (networkOk) {
+                CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_MY_PHOTO);
+                CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_MY_PHOTO);
+                RequestPackage requestPackage = new RequestPackage();
+                requestPackage.setEndPoint(searchMyPhotoAPI);
+                requestPackage.setParam("companyid", Integer.toString(company_id));
+                requestPackage.setParam("userid", Integer.toString(user_id));
+                requestPackage.setParam("searchby", searchby);
+                requestPackage.setParam("keyword", keyword);
+                requestPackage.setParam("sortby", sortby);
 
-        String searchMyPhotoAPI = rootStringUrl + "/doSearchMyPhoto.php";
-        if (networkOk) {
-            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_MY_PHOTO);
-            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_MY_PHOTO);
-            RequestPackage requestPackage = new RequestPackage();
-            requestPackage.setEndPoint(searchMyPhotoAPI);
-            requestPackage.setParam("companyid", Integer.toString(company_id));
-            requestPackage.setParam("userid", Integer.toString(user_id));
-            requestPackage.setParam("searchby", searchby);
-            requestPackage.setParam("keyword", keyword);
-            requestPackage.setParam("sortby", sortby);
-
-            Intent intent = new Intent(cont, CandyLoopService.class);
-            intent.setData(Uri.parse(searchMyPhotoAPI));
-            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
-            cont.startService(intent);
-        } else {
-            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+                Intent intent = new Intent(cont, CandyLoopService.class);
+                intent.setData(Uri.parse(searchMyPhotoAPI));
+                intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+                cont.startService(intent);
+            } else {
+                Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+            }
         }
     }
 
@@ -392,26 +401,30 @@ public class APIManager {
                 "&sortby=" + sortby;
 
         Log.i("searchMyFaveAPI", searchMyFaveInit);
-        boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
+        if(user_id==0){
+            Log.i("API MANAGER", "getSearchMyFavouriteAPI is called but USER ID = "+user_id);
+        }else {
+            boolean networkOk = NetworkHelper.hasNetworkAccess(cont);
 
-        String searchMyFaveAPI = rootStringUrl + "/doSearchMyFavourites.php";
-        if (networkOk) {
-            CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_MY_FAVOURITES);
-            CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_MY_FAVOURITES);
-            RequestPackage requestPackage = new RequestPackage();
-            requestPackage.setEndPoint(searchMyFaveAPI);
-            requestPackage.setParam("companyid", Integer.toString(company_id));
-            requestPackage.setParam("userid", Integer.toString(user_id));
-            requestPackage.setParam("searchby", searchby);
-            requestPackage.setParam("keyword", keyword);
-            requestPackage.setParam("sortby", sortby);
+            String searchMyFaveAPI = rootStringUrl + "/doSearchMyFavourites.php";
+            if (networkOk) {
+                CandyLoopService.setRequestPackage(ServiceHelper.REQUEST_SEARCH_MY_FAVOURITES);
+                CandyLoopService.setMyServicePayload(ServiceHelper.PAYLOAD_SEARCH_MY_FAVOURITES);
+                RequestPackage requestPackage = new RequestPackage();
+                requestPackage.setEndPoint(searchMyFaveAPI);
+                requestPackage.setParam("companyid", Integer.toString(company_id));
+                requestPackage.setParam("userid", Integer.toString(user_id));
+                requestPackage.setParam("searchby", searchby);
+                requestPackage.setParam("keyword", keyword);
+                requestPackage.setParam("sortby", sortby);
 
-            Intent intent = new Intent(cont, CandyLoopService.class);
-            intent.setData(Uri.parse(searchMyFaveAPI));
-            intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
-            cont.startService(intent);
-        } else {
-            Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+                Intent intent = new Intent(cont, CandyLoopService.class);
+                intent.setData(Uri.parse(searchMyFaveAPI));
+                intent.putExtra(CandyLoopService.REQUEST_PACKAGE, requestPackage);
+                cont.startService(intent);
+            } else {
+                Utilities.displayToast(cont, ServiceHelper.ERROR_NETWORK_MSG);
+            }
         }
     }
 

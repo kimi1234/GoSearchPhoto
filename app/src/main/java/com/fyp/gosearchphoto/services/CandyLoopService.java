@@ -603,6 +603,15 @@ public class CandyLoopService extends IntentService {
                     manager = LocalBroadcastManager.getInstance(getApplicationContext());
                     manager.sendBroadcast(messageIntent);
                     break;
+                case ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_OWNER:
+                    gson = new Gson();
+                    DataAlbum daItems3 = gson.fromJson(response, DataAlbum.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems3);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
             }
         }
         if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_MYPHOTO)) {
@@ -648,6 +657,15 @@ public class CandyLoopService extends IntentService {
                     manager = LocalBroadcastManager.getInstance(getApplicationContext());
                     manager.sendBroadcast(messageIntent);
                     break;
+                case ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_OWNER:
+                    gson = new Gson();
+                    DataAlbum daItems3 = gson.fromJson(response, DataAlbum.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems3);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
             }
         }
         if (MY_SERVICE_PAGE.equals(ServiceHelper.PAGE_FAVOURITES)) {
@@ -690,6 +708,15 @@ public class CandyLoopService extends IntentService {
                     Log.i("Response", response);
                     messageIntent = new Intent(MY_SERVICE_PAGE);
                     messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems2);
+                    manager = LocalBroadcastManager.getInstance(getApplicationContext());
+                    manager.sendBroadcast(messageIntent);
+                    break;
+                case ServiceHelper.REQUEST_GET_ALBUM_LIST_BY_OWNER:
+                    gson = new Gson();
+                    DataAlbum daItems3 = gson.fromJson(response, DataAlbum.class);
+                    Log.i("Response", response);
+                    messageIntent = new Intent(MY_SERVICE_PAGE);
+                    messageIntent.putExtra(MY_SERVICE_PAYLOAD, daItems3);
                     manager = LocalBroadcastManager.getInstance(getApplicationContext());
                     manager.sendBroadcast(messageIntent);
                     break;

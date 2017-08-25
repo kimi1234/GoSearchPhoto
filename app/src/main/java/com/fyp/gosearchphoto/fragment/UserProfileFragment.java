@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fyp.gosearchphoto.R;
+import com.fyp.gosearchphoto.activity.ChangeEPassActivity;
 import com.fyp.gosearchphoto.activity.ManageUsersActivity;
 import com.fyp.gosearchphoto.model.DataDepartment;
 import com.fyp.gosearchphoto.model.DataStatus;
@@ -48,7 +49,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
             user_type, user_dept;
 
     private String getETFullname, getETEmail, getSPINdepartment,
-    getETPassword, getETCPassword;
+            getETPassword, getETCPassword;
 
     private TextView tvUserProfileValidation;
     private int user_id, user_cid;
@@ -126,10 +127,9 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
             btnUserProfileCP.setVisibility(View.VISIBLE);
             etUserProfilePass.setVisibility(View.GONE);
             etUserProfileCPass.setVisibility(View.GONE);
-            registerBroadcast();
-            getDepartmentListNow();
+
         } else {
-            user_id=0;
+            user_id = 0;
             btnUserProfileRegister.setText("Register");
 
             btnUserProfileDeleteAcct.setVisibility(View.GONE);
@@ -137,8 +137,9 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
 
             etUserProfilePass.setVisibility(View.VISIBLE);
             etUserProfileCPass.setVisibility(View.VISIBLE);
-
         }
+        registerBroadcast();
+        getDepartmentListNow();
         tvUserProfileValidation.setVisibility(View.INVISIBLE);
 
 
@@ -162,6 +163,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
 
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -174,6 +176,14 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                 break;
 
             case R.id.btnUserProfileCP:
+
+                if (user_id != 0) {
+                    Intent intent2 = new Intent(mContext, ChangeEPassActivity.class);
+                    intent2.putExtra(DataUserAdapter.ITEM_USER_ID, user_id);
+                    mContext.startActivity(intent2);
+
+                }
+
                 break;
         }
     }
@@ -181,10 +191,10 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
     public void updateUProfileNow() {
         getETFullname = etUserProfileFullName.getText().toString().trim();
         getETEmail = etUserProfileEmail.getText().toString().trim();
-        getETPassword =etUserProfilePass.getText().toString().trim();
+        getETPassword = etUserProfilePass.getText().toString().trim();
         getETCPassword = etUserProfileCPass.getText().toString().trim();
 
-        if (Utilities.checkIsNull(getETFullname) == true || Utilities.checkIsNull(getETEmail)==true) {
+        if (Utilities.checkIsNull(getETFullname) == true || Utilities.checkIsNull(getETEmail) == true) {
             tvUserProfileValidation.setText("Please enter all fields");
             tvUserProfileValidation.setVisibility(View.VISIBLE);
         } else {
@@ -204,10 +214,10 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                     );
                 } else if (btnUserProfileRegister.getText().equals("Register")) {
 
-                    if (Utilities.checkIsNull(getETPassword) == true || Utilities.checkIsNull(getETCPassword)==true) {
+                    if (Utilities.checkIsNull(getETPassword) == true || Utilities.checkIsNull(getETCPassword) == true) {
                         tvUserProfileValidation.setText("Please enter all fields");
                         tvUserProfileValidation.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         if (getETPassword.equals(getETCPassword)) {
 
                             //TODO: CALL API
@@ -233,6 +243,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
         APIManager.checkUserExist(mContext, email);
 
     }
+
     private void getDepartmentListNow() {
         APIManager.getCompanyDepartment(mContext, PreferencesConfig.getCompanyIdPreference(mContext), "all");
     }
@@ -306,7 +317,7 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                     if (duData1.getStatus().equals("success")) {
                         Utilities.displayToast(mContext, "User successfully created");
                         startActivity(new Intent(mContext, ManageUsersActivity.class));
-                    }else {
+                    } else {
                         Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
                     }
 
@@ -314,22 +325,22 @@ public class UserProfileFragment extends Fragment implements View.OnClickListene
                     break;
                 case ServiceHelper.PAYLOAD_CHECKUSER_EXIST:
                     DataStatus du = (DataStatus) intent.getParcelableExtra(CandyLoopService.MY_SERVICE_PAYLOAD);
-                    if (du.getStatus().equals("user does not exist")){
+                    if (du.getStatus().equals("user does not exist")) {
 
-                       APIManager.getRegisterCompanyUser(mContext,
-                               getSPINdepartment,
-                               "Employee",
-                               getETFullname,
-                               getETCPassword,
-                               getETEmail,
-                               PreferencesConfig.getCompanyIdPreference(mContext)
-                       );
+                        APIManager.getRegisterCompanyUser(mContext,
+                                getSPINdepartment,
+                                "Employee",
+                                getETFullname,
+                                getETCPassword,
+                                getETEmail,
+                                PreferencesConfig.getCompanyIdPreference(mContext)
+                        );
 
 
-                    }else if(du.getStatus().equals("user exist")){
+                    } else if (du.getStatus().equals("user exist")) {
                         tvUserProfileValidation.setText("Email already exists. Please try again");
                         tvUserProfileValidation.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         Utilities.displayToast(mContext, ServiceHelper.ERROR_MSG);
                     }
 

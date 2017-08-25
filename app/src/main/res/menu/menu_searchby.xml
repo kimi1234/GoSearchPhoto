@@ -3,21 +3,16 @@
     <item
         android:id="@+id/menu_search_name"
         android:title="Name" />
+<item
+        android:id="@+id/menu_search_width"
+        android:title="Width" />
     <item
-        android:id="@+id/menu_search_size"
-        android:title="Size" />
+        android:id="@+id/menu_search_height"
+        android:title="Height" />
     <item
         android:id="@+id/menu_search_ext"
         android:title="Extension" />
-    <item
-        android:id="@+id/menu_search_uploaddate"
-        android:title="Last Upload Date" />
-    <item
-        android:id="@+id/menu_search_album"
-        android:title="Album" />
-    <item
-        android:id="@+id/menu_search_desc"
-        android:title="Description" />
+
     <item
         android:id="@+id/menu_search_tags"
         android:title="Tags" />

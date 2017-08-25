@@ -58,21 +58,8 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private String PAGE_NAME, getSearchBy, getSortBy;
-    private int getCompanyID, getUserID;
-
-
-
-    // Advanced search
-    /*private EditText etUploadFromDate;
-    private EditText etUploadToDate;
-    private  String selectedButtonStr = "UploadFrom";
-    private String getImageType;
-    private Calendar myCalendarFrom;
-    private Calendar myCalendarTo;
-    private Spinner spinnerImageType;
-    private Dialog adv_menu_dialog;
-    private Button adv_menu_dialogButtonCancel;
-    private Button adv_menu_dialogButtonOK ;*/
+    private int getCompanyID;
+    private int getUserID =0;
 
     public MyPhotosFragment() {
         // Required empty public constructor
@@ -244,10 +231,10 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                                         getSortBy = "img_name";
                                         break;
                                     case "Size":
-                                        getSortBy = "width";
+                                        getSortBy = "img_name";
                                         break;
                                     case "Last Upload Date":
-                                        getSortBy = "uploadDateTime";
+                                        getSortBy = "img_name";
                                         break;
                                 }
                                 return false;
@@ -267,27 +254,15 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                                     case "Name":
                                         getSearchBy = "img_name";
                                         break;
-                                    case "Size":
+                                    case "Width":
                                         getSearchBy = "img_width";
                                         break;
                                     case "Extension":
                                         getSearchBy = "extension";
 
                                         break;
-                                    case "Last Upload Date":
-                                        getSearchBy = "uploadDateTime";
-                                        break;
-                                    case "Album":
-                                        getSearchBy = "img_name";
-
-                                        break;
-                                    case "Description":
-                                        getSearchBy = "description";
-
-                                        break;
-                                    case "Tags":
-                                        getSearchBy = "img_name";
-
+                                    case "Height":
+                                        getSearchBy = "img_height";
                                         break;
                                 }
 
@@ -295,11 +270,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                             }
                         }).show();
                 return true;
-            case R.id.menu_adv_search:
-             //   showAdvancedMenu();
-                Utilities ut = new Utilities();
-                ut.showAdvanceSearch(getContext(), "MyPhotos");
-                return true;
+
             default:
                 return super.onContextItemSelected(item);
         }
@@ -339,160 +310,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
 
 
     }
-   /*
-    *   Advanced Menu
-    * */
 
-   /* public void showAdvancedMenu(){
-
-
-        adv_menu_dialog = new Dialog(getContext());
-        adv_menu_dialog.setContentView(R.layout.popup_advpublic_search);
-        adv_menu_dialog.setTitle("Advanced Menu");
-
-        adv_menu_dialogButtonCancel = (Button) adv_menu_dialog.findViewById(R.id.dialog_btn_cancel);
-        adv_menu_dialogButtonOK = (Button) adv_menu_dialog.findViewById(R.id.dialog_btn_ok);
-        Button btnUploadToDate = (Button) adv_menu_dialog.findViewById(R.id.btnUploadToDate);
-        Button btnUploadFromDate = (Button) adv_menu_dialog.findViewById(R.id.btnUploadFromDate);
-
-
-        EditText etTitle = (EditText) adv_menu_dialog.findViewById(R.id.etTitle);
-        EditText etDesc = (EditText) adv_menu_dialog.findViewById(R.id.etDesc);
-        etUploadFromDate = (EditText) adv_menu_dialog.findViewById(R.id.etUploadFromDate);
-        etUploadToDate = (EditText) adv_menu_dialog.findViewById(R.id.etUploadToDate);
-        EditText etTag = (EditText) adv_menu_dialog.findViewById(R.id.etTag);
-        EditText etUploadedBy = (EditText) adv_menu_dialog.findViewById(R.id.etUploadedBy);
-
-        spinnerImageType = (Spinner) adv_menu_dialog.findViewById(R.id.spinnerImageType);
-        initSpinnerImageType();
-        myCalendarFrom = Calendar.getInstance();
-        myCalendarTo = Calendar.getInstance();
-
-        etUploadedBy.setVisibility(View.GONE);
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                if(selectedButtonStr.equals("UploadTo")) {
-
-                    myCalendarTo.set(Calendar.YEAR, year);
-                    myCalendarTo.set(Calendar.MONTH, monthOfYear);
-                    myCalendarTo.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                }else{
-                    myCalendarFrom.set(Calendar.YEAR, year);
-                    myCalendarFrom.set(Calendar.MONTH, monthOfYear);
-                    myCalendarFrom.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                }
-                updateLabel();
-
-            }
-
-        };
-
-        btnUploadFromDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                myCalendarFrom = Calendar.getInstance();
-                selectedButtonStr = "UploadFrom";
-                new DatePickerDialog(getContext(), date, myCalendarFrom
-                        .get(Calendar.YEAR), myCalendarFrom.get(Calendar.MONTH),
-                        myCalendarFrom.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-        btnUploadToDate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                myCalendarTo = Calendar.getInstance();
-                selectedButtonStr = "UploadTo";
-                new DatePickerDialog(getContext(), date, myCalendarTo
-                        .get(Calendar.YEAR), myCalendarTo.get(Calendar.MONTH),
-                        myCalendarTo.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-
-
-        // set the custom dialog components - text, image and button
-        // if button is clicked, close the custom dialog
-        adv_menu_dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adv_menu_dialog.dismiss();
-                adv_menu_dialog = null;
-            }
-        });
-        adv_menu_dialogButtonOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adv_menu_dialog.dismiss();
-                adv_menu_dialog = null;
-            }
-        });
-
-        adv_menu_dialog.show();
-        //  Set dialog width to fill parent and height to wrap content
-        adv_menu_dialog.getWindow()
-                .setAttributes(Utilities.setPopUpWidth(adv_menu_dialog));
-
-
-
-    }
-    public void updateLabel(){
-        String myFormat = "MM/dd/yy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-        int catalog_outdated=0;
-        if(selectedButtonStr.equals("UploadTo")){
-            etUploadToDate.setText(sdf.format(myCalendarTo.getTime()));
-        }else {
-            etUploadFromDate.setText(sdf.format(myCalendarFrom.getTime()));
-        }
-
-        if (myCalendarFrom.after(myCalendarTo)) {
-            catalog_outdated = 1;
-        }
-        Utilities.displayToast(getContext(),"outdated"+catalog_outdated);
-
-    }
-
-    private void initSpinnerImageType() {
-        //TODO Set industry default when connected to db
-        // Create an ArrayAdapter using the string array and a default spinner
-        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
-                .createFromResource(getContext(), R.array.photo_type_array,
-                        android.R.layout.simple_spinner_item);
-
-        // Specify the layout to use when the list of choices appears
-        staticAdapter
-                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Apply the adapter to the spinner
-        spinnerImageType.setAdapter(staticAdapter);
-
-
-        spinnerImageType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                Log.v("item", (String) parent.getItemAtPosition(position));
-                getImageType=spinnerImageType.getSelectedItem().toString();
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //  Auto-generated method stub
-            }
-        });
-//        Utilities.selectSpinnerValue(staticSpinner, "Others");
-    }
-*/
    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
        @Override
        public void onReceive(Context context, Intent intent) {
@@ -510,6 +328,7 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                    }else if(du.getStatus().equals("success")){
                        List<DataImage> listFromServer = du.getImageinfo();
                        Log.i("to string ", listFromServer.toString());
+                       PAGE_NAME = "MyPhotoPage";
 
                        // filter list and add pagename list
                        List<DataImage> dataItems = new ArrayList<>();
@@ -576,6 +395,12 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                         new IntentFilter(CandyLoopService.MY_SERVICE_PAGE));
 
     }
+
+    public void unRegisterBroadcast(){
+        LocalBroadcastManager.getInstance(getContext())
+                .unregisterReceiver(mBroadcastReceiver);
+
+    }
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -585,7 +410,6 @@ public class MyPhotosFragment extends Fragment implements View.OnClickListener {
                 registerBroadcast();
                 //getMyPhotoImageNow();
             Log.i("MYPHOTO"," : isVisibleToUser called");
-
 
         } else {
             LocalBroadcastManager.getInstance(getContext())
